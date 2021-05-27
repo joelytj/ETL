@@ -10,7 +10,11 @@
     "heroku-postbuild": "npm run build",
     "start": "NODE_ENV=production node server.js",
     "compile": "node ./ethereum/compile.js",
-    "deploy": "node ./ethereum/deploy.js"
+    "deploy": "node ./ethereum/deploy.js",
+    "lite": "lite-server"
+  },
+  "devDependencies": {
+    "lite-server": "^2.3.0"
   },
   "repository": {
     "type": "git",
@@ -23,6 +27,7 @@
   },
   "homepage": "https://github.com/shelinals/ethereum-rent-app#readme",
   "dependencies": {
+    "@openzeppelin/contracts": "^2.5.1",
     "buffer": "^5.2.1",
     "ethers": "^4.0.28",
     "fs-extra": "^8.0.1",

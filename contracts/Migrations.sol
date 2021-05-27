@@ -8,10 +8,13 @@ contract Migrations {
     if (msg.sender == owner) _;
   }
 
-  constructor() public {
+  // constructor() public {
+  //   owner = msg.sender;
+  // }
+  function Migrations() public {
     owner = msg.sender;
   }
-
+  
   function setCompleted(uint completed) public restricted {
     last_completed_migration = completed;
   }

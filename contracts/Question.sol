@@ -18,7 +18,7 @@ contract QuestionFactory {
         
         Question question = Question(newQuestion);
         question.transfer(msg.value);
-        Profile(users[msg.sender]).updateToken(0, deposit);
+        Profile(users[msg.sender]).updateToken(0, deposit); //subtract deposit from number of tokens of profile
         Profile(users[msg.sender]).increaseNumOfQues();
         question.postQuestion();  //Save posted time here
         
