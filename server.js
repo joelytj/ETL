@@ -7,7 +7,7 @@ const app = next({
 
 const routes = require('./routes');
 const handler = routes.getRequestHandler(app);
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3030;
 
 app.prepare().then(() => {
     createServer(handler).listen(port, (err) => {

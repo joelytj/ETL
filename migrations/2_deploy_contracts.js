@@ -10,7 +10,7 @@ module.exports = function(deployer) {
       return deployer.deploy(ETLTokenSale, ETLToken.address, tokenPrice);
     }).then(function() {
       var tokensAvailable = 750000;
-      ETLToken.deployed().then(function(instance) { instance.transfer(ETLTokenSale.address, tokensAvailable, { from: "0x007D05c187A01ca9c251AF3D2DDeC6369397290b" }); })
+      ETLToken.deployed().then(function(instance) { instance.transfer(ETLTokenSale.address, tokensAvailable, { from: "0xd2BF5D1B3ceCE53eE825760E6644c1d4E1028C04" }); })
     });
 
 };
