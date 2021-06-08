@@ -28,6 +28,7 @@
   "homepage": "https://github.com/shelinals/ethereum-rent-app#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^2.5.1",
+    "babel-preset-es2015": "^6.24.1",
     "buffer": "^5.2.1",
     "ethers": "^4.0.28",
     "fs-extra": "^8.0.1",
@@ -45,6 +46,7 @@
     "react-dom": "^16.8.6",
     "react-easy-crop": "^1.12.0",
     "react-qr-reader": "^2.2.1",
+    "react-scripts": "^4.0.3",
     "react-to-print": "^2.2.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.1",

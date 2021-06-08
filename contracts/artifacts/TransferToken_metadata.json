@@ -1,0 +1,84 @@
+{
+	"compiler": {
+		"version": "0.4.26+commit.4563c3fc"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_recipient",
+						"type": "address"
+					},
+					{
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "transfer",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "msgSender",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Question.sol": "TransferToken"
+		},
+		"evmVersion": "byzantium",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/ETLToken.sol": {
+			"keccak256": "0x1086bc1e0a2f20d0fa37dbf4696b2eeceba58c98fe2bf3630c64ab02cda33b03",
+			"urls": [
+				"bzzr://7d3de8331771fe9e5ee8f05d28f4f8072ca1dc9a7b2c60a1301b2906a5570b50"
+			]
+		},
+		"contracts/Question.sol": {
+			"keccak256": "0x11ab1c59816f3928f86ab90f680591e53ed538d8647b17b16399a0089736df9d",
+			"urls": [
+				"bzzr://2f30e73cb826dff883192ab40f3aa0f8d8e7c6ab6a878379706db7e4d8cb7e51"
+			]
+		}
+	},
+	"version": 1
+}

@@ -75,6 +75,7 @@ class QuestionNew extends Component {
                 successMessage: "You have submitted the question successfully" });
         } catch (err) {
             this.setState({ errorMessage: err.message });
+            console.log(err.toString());
         }
         console.log("LOADINGGG " + this.state.loading)
         this.setState({ loading: false });

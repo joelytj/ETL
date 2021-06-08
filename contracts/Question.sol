@@ -1,13 +1,39 @@
 pragma solidity ^0.4.25;
 pragma experimental ABIEncoderV2;
+import "./ETLToken.sol";
+
+contract contractB {
+    address public msgSender = msg.sender;
+    address public thisAddress = this;
+    ETLToken tokenContract = ETLToken(0xd9145CCE52D386f254917e481eB44e9943F39138);
+    mapping ( address => uint256 ) public balances;
+
+    function depositing(uint tokens) public {
+
+        // add the deposited tokens into existing balance 
+        balances[msg.sender]+= tokens;
+
+        // transfer the tokens from the sender to this contract
+        require(tokenContract.transferFrom(msg.sender, this, tokens));
+    }
+
+    function returnTokens() public {
+        balances[msg.sender] = 0;
+        tokenContract.transfer(msg.sender, balances[msg.sender]);
+    }
+
+}
 
 contract QuestionFactory {
     address[] private deployedQuestions;
     mapping(address => address) public users;
+    address public msgSender = msg.sender;
+    ETLToken tokenContract = ETLToken(0xd9145CCE52D386f254917e481eB44e9943F39138);
 
     function createQuestion(string category, string questionTitle, string description, uint deposit, 
-                    uint maxDuration, string[] fileHashesQuestion, string[] fileNamesQuestion) public payable {
+                    uint maxDuration, string[] fileHashesQuestion, string[] fileNamesQuestion) public {
         if (users[msg.sender] == 0) {
+            //default value 0 means no assigned value; create a profile for the user address
             address profile = new Profile(msg.sender);
             users[msg.sender] = profile;
         }    
@@ -17,12 +43,19 @@ contract QuestionFactory {
         deployedQuestions.push(newQuestion);
         
         Question question = Question(newQuestion);
-        question.transfer(msg.value);
-        Profile(users[msg.sender]).updateToken(0, deposit); //subtract deposit from number of tokens of profile
+
+        contractB contractb = contractB(0xf8e81D47203A594245E36C48e151709F0C19fBe8); //0x9E627DaBdaC07A61A281A2c9d650A5983f064708
+        require(tokenContract.approve(0xf8e81D47203A594245E36C48e151709F0C19fBe8, deposit)); //0x9E627DaBdaC07A61A281A2c9d650A5983f064708
+        //try using increaseAllowance
+        contractb.depositing(deposit);
+
+        // question.transfer(msg.value); 
+        Profile(users[msg.sender]).updateToken(0, deposit); //0 is subtract deposit from number of tokens of profile
         Profile(users[msg.sender]).increaseNumOfQues();
         question.postQuestion();  //Save posted time here
         
     }
+
 
     function createAnswer(address _question, string _reply, string[] _fileHashes, string[] _fileNames, int _parent) public {
         if (users[msg.sender] == 0) {
@@ -87,6 +120,8 @@ contract QuestionFactory {
     function getDeployedQuestions() public view returns(address[]) {
         return deployedQuestions;
     }
+
+
 }    
 
 
@@ -279,14 +314,15 @@ contract Question {
 }
 
 contract Profile {
-
+    // ETLToken public tokenContract = ETLToken(0xFF02F838ef1031B08a62a8AB24E3AC02328957d2);
+    // uint public token = tokenContract.balanceOf(msg.sender);
     uint public token = 10;
     uint public numOfQues;
     uint public sumOfQuesRate;
     uint public numOfAns;
     uint public sumOfAnsRate;
     address public user;
-
+    
     function Profile (address _user) public {
         user = _user;
     }
@@ -308,11 +344,13 @@ contract Profile {
     }
 
     function getavgQuesRate() public returns (uint){
+        require(numOfQues != 0);
         uint avgQuesRate = sumOfQuesRate/numOfQues;
         return avgQuesRate;
     }
 
     function getavgAnsRate() public returns (uint){
+        require(numOfAns != 0);
         uint avgAnsRate = sumOfAnsRate/numOfAns;
         return avgAnsRate;
     }
@@ -335,6 +373,18 @@ contract Profile {
     }
 
     function getToken() public returns(uint){
+        // token = tokenContract.balanceOf(msg.sender);
+        // balance = tokenContract.balanceOf(msg.sender);
+        // return balance;
+        
         return token;
+
+
     }
+
+
 }
+
+
+
+

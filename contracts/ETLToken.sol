@@ -1,5 +1,7 @@
 pragma solidity ^0.4.25;
 
+import './Question.sol';
+
 contract ETLToken {
     string  public name = "ETLToken";
     string  public symbol = "ETL";
@@ -47,40 +49,21 @@ contract ETLToken {
 
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
         require(_value <= balanceOf[_from]);
-        require(_value <= allowance[_from][msg.sender]);
+        require(_value <= allowance[_from][_to]);
 
         balanceOf[_from] -= _value;
         balanceOf[_to] += _value;
 
-        allowance[_from][msg.sender] -= _value;
+        allowance[_from][_to] -= _value;
 
-       emit Transfer(_from, _to, _value);
+        emit Transfer(_from, _to, _value);
 
         return true;
     }
-}
-
-
-// pragma solidity ^0.4.25;
-
-// import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-
-
-// contract SimpleToken is ERC20 {
-
-//     string public name = "EtherLearn";
-//     string public symbol = "ETL";
-//     uint8 public decimals = 2;
-//     uint public INITIAL_SUPPLY = 1000000000;
-//     constructor() public {
-//         _mint(msg.sender, INITIAL_SUPPLY);
-//     }
     
-// }
+    function balanceOf(address _account) public view returns (uint256) {
+        return balanceOf[_account];
+    }
 
 
-
-
-//ropsten ETL token contract address: 0x5610c9a3Cb2DC630E1Df961ADe338617FCF3BB77
-//ropsten question.sol contract address: 0xf3BD5d0d73AFC1a6d2dEd09f722DF54B5AA75Df3
-
+}

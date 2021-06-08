@@ -1,0 +1,250 @@
+{
+	"compiler": {
+		"version": "0.4.26+commit.4563c3fc"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getDeployedQuestions",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_question",
+						"type": "address"
+					},
+					{
+						"name": "_reply",
+						"type": "string"
+					},
+					{
+						"name": "_fileHashes",
+						"type": "string[]"
+					},
+					{
+						"name": "_fileNames",
+						"type": "string[]"
+					},
+					{
+						"name": "_parent",
+						"type": "int256"
+					}
+				],
+				"name": "createAnswer",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_user",
+						"type": "address"
+					}
+				],
+				"name": "getProfile",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_question",
+						"type": "address"
+					}
+				],
+				"name": "shareTokenAt",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_question",
+						"type": "address"
+					},
+					{
+						"name": "_ratingAnswer",
+						"type": "uint256"
+					},
+					{
+						"name": "_index",
+						"type": "uint256"
+					}
+				],
+				"name": "ratingAnswerAt",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_question",
+						"type": "address"
+					},
+					{
+						"name": "_ratingQuestion",
+						"type": "uint256"
+					}
+				],
+				"name": "ratingQuestionAt",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "category",
+						"type": "string"
+					},
+					{
+						"name": "questionTitle",
+						"type": "string"
+					},
+					{
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"name": "deposit",
+						"type": "uint256"
+					},
+					{
+						"name": "maxDuration",
+						"type": "uint256"
+					},
+					{
+						"name": "fileHashesQuestion",
+						"type": "string[]"
+					},
+					{
+						"name": "fileNamesQuestion",
+						"type": "string[]"
+					}
+				],
+				"name": "createQuestion",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_user",
+						"type": "address"
+					}
+				],
+				"name": "hasProfile",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "users",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "msgSender",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Question.sol": "QuestionFactory"
+		},
+		"evmVersion": "byzantium",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/ETLToken.sol": {
+			"keccak256": "0x1086bc1e0a2f20d0fa37dbf4696b2eeceba58c98fe2bf3630c64ab02cda33b03",
+			"urls": [
+				"bzzr://7d3de8331771fe9e5ee8f05d28f4f8072ca1dc9a7b2c60a1301b2906a5570b50"
+			]
+		},
+		"contracts/Question.sol": {
+			"keccak256": "0x8c70d22703bdf6aec054557fe4b2b723cc70f98d0923cdef9b78cee85530c59a",
+			"urls": [
+				"bzzr://4dd3295cb775348a9c874fe7c0865c728363b67c86416cec22ff6d106cd7b79f"
+			]
+		}
+	},
+	"version": 1
+}

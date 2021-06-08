@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 import Profile from '../ethereum/profile';
+import Token from '../ethereum/ETLToken' 
 import ReactToPrint from 'react-to-print';
 // import Rental from '../ethereum/rental';
 import { Link, Router } from '../routes';
@@ -30,11 +31,20 @@ class ProfileShow extends Component {
             } else {
                 const profileAddress = await factory.methods.getProfile(accounts[0]).call();
                 var profile = Profile(profileAddress);
+                // var ETLToken = Token("0xF81A07E1257Db8a259631c3Bf8555279696ed7E1");
+                // var token = await ETLToken.methods.balanceOf(accounts[0]).call();
+                // console.log("token", token)
                 var token = await profile.methods.getToken().call(); 
+                console.log("token", token) 
                 var numOfQues = await profile.methods.getNumOfQues().call();
+                console.log(numOfQues)
                 var rateOfQues = await profile.methods.getavgQuesRate().call();
+                console.log(rateOfQues)
                 var numOfAns = await profile.methods.getNumOfAns().call();   
-                var rateOfAns = await profile.methods.getavgAnsRate().call();
+                console.log(numOfAns)
+                // var rateOfAns = await profile.methods.getavgAnsRate().call();
+                var rateOfAns = 1;
+                console.log(rateOfAns)
                 var loader = false;
                 var isUser = true;
 

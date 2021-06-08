@@ -1,104 +1,38 @@
 {
-  "contractName": "SafeMath",
+  "contractName": "ApproveAndCallFallBack",
   "abi": [
     {
-      "constant": true,
+      "constant": false,
       "inputs": [
         {
-          "name": "a",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "name": "tokens",
           "type": "uint256"
         },
         {
-          "name": "b",
-          "type": "uint256"
-        }
-      ],
-      "name": "safeAdd",
-      "outputs": [
-        {
-          "name": "c",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "pure",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "uint256"
+          "name": "token",
+          "type": "address"
         },
         {
-          "name": "b",
-          "type": "uint256"
+          "name": "data",
+          "type": "bytes"
         }
       ],
-      "name": "safeSub",
-      "outputs": [
-        {
-          "name": "c",
-          "type": "uint256"
-        }
-      ],
+      "name": "receiveApproval",
+      "outputs": [],
       "payable": false,
-      "stateMutability": "pure",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "uint256"
-        },
-        {
-          "name": "b",
-          "type": "uint256"
-        }
-      ],
-      "name": "safeMul",
-      "outputs": [
-        {
-          "name": "c",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "pure",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "uint256"
-        },
-        {
-          "name": "b",
-          "type": "uint256"
-        }
-      ],
-      "name": "safeDiv",
-      "outputs": [
-        {
-          "name": "c",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "pure",
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.4.26+commit.4563c3fc\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"name\":\"a\",\"type\":\"uint256\"},{\"name\":\"b\",\"type\":\"uint256\"}],\"name\":\"safeSub\",\"outputs\":[{\"name\":\"c\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"a\",\"type\":\"uint256\"},{\"name\":\"b\",\"type\":\"uint256\"}],\"name\":\"safeDiv\",\"outputs\":[{\"name\":\"c\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"a\",\"type\":\"uint256\"},{\"name\":\"b\",\"type\":\"uint256\"}],\"name\":\"safeMul\",\"outputs\":[{\"name\":\"c\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"a\",\"type\":\"uint256\"},{\"name\":\"b\",\"type\":\"uint256\"}],\"name\":\"safeAdd\",\"outputs\":[{\"name\":\"c\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/joelytj/Desktop/EtherLearn/contracts/QKC.sol\":\"SafeMath\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/joelytj/Desktop/EtherLearn/contracts/QKC.sol\":{\"keccak256\":\"0xec6a3d1c9e99fa2c12203ac42698f75d74429de19bb92a33a5ab851a33d0b1d2\",\"urls\":[\"bzzr://d0912a0abe941f0e147aae6ff60bdb11c2a80bafbb36aa157e5eeeb3af665836\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50610181806100206000396000f3006080604052600436106100615763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663a293d1e88114610066578063b5931f7c14610093578063d05c78da146100ae578063e6cb9013146100c9575b600080fd5b34801561007257600080fd5b506100816004356024356100e4565b60408051918252519081900360200190f35b34801561009f57600080fd5b506100816004356024356100f9565b3480156100ba57600080fd5b5061008160043560243561011a565b3480156100d557600080fd5b50610081600435602435610145565b6000828211156100f357600080fd5b50900390565b600080821161010757600080fd5b818381151561011257fe5b049392505050565b818102821580610134575081838281151561013157fe5b04145b151561013f57600080fd5b92915050565b8181018281101561013f57600080fd00a165627a7a72305820ab78a8d42ec91ee83a0a5710c1c32545a9e8db84d81b12ebcf7edb589da776e20029",
-  "deployedBytecode": "0x6080604052600436106100615763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663a293d1e88114610066578063b5931f7c14610093578063d05c78da146100ae578063e6cb9013146100c9575b600080fd5b34801561007257600080fd5b506100816004356024356100e4565b60408051918252519081900360200190f35b34801561009f57600080fd5b506100816004356024356100f9565b3480156100ba57600080fd5b5061008160043560243561011a565b3480156100d557600080fd5b50610081600435602435610145565b6000828211156100f357600080fd5b50900390565b600080821161010757600080fd5b818381151561011257fe5b049392505050565b818102821580610134575081838281151561013157fe5b04145b151561013f57600080fd5b92915050565b8181018281101561013f57600080fd00a165627a7a72305820ab78a8d42ec91ee83a0a5710c1c32545a9e8db84d81b12ebcf7edb589da776e20029",
-  "sourceMap": "51:514:3:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;51:514:3;;;;;;;",
-  "deployedSourceMap": "51:514:3:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;197:113;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;197:113:3;;;;;;;;;;;;;;;;;;;;;;;451:112;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;451:112:3;;;;;;;317:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;317:127:3;;;;;;;77:113;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;77:113:3;;;;;;;197;251:6;277;;;;269:15;;;;;;-1:-1:-1;298:5:3;;;197:113::o;451:112::-;505:6;531:5;;;523:14;;;;;;555:1;551;:5;;;;;;;;;451:112;-1:-1:-1;;;451:112:3:o;317:127::-;393:5;;;416:6;;;:20;;;435:1;430;426;:5;;;;;;;;:10;416:20;408:29;;;;;;;;317:127;;;;:::o;77:113::-;153:5;;;176:6;;;;168:15;;;;",
+  "metadata": "",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.24;\n \n//Safe Math Interface\n \ncontract SafeMath {\n \n    function safeAdd(uint a, uint b) public pure returns (uint c) {\n        c = a + b;\n        require(c >= a);\n    }\n \n    function safeSub(uint a, uint b) public pure returns (uint c) {\n        require(b <= a);\n        c = a - b;\n    }\n \n    function safeMul(uint a, uint b) public pure returns (uint c) {\n        c = a * b;\n        require(a == 0 || c / a == b);\n    }\n \n    function safeDiv(uint a, uint b) public pure returns (uint c) {\n        require(b > 0);\n        c = a / b;\n    }\n}\n \n \n//ERC Token Standard #20 Interface\n \ncontract ERC20Interface {\n    function totalSupply() public constant returns (uint);\n    function balanceOf(address tokenOwner) public constant returns (uint balance);\n    function allowance(address tokenOwner, address spender) public constant returns (uint remaining);\n    function transfer(address to, uint tokens) public returns (bool success);\n    function approve(address spender, uint tokens) public returns (bool success);\n    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n \n    event Transfer(address indexed from, address indexed to, uint tokens);\n    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);\n}\n \n \n//Contract function to receive approval and execute function in one call\n \ncontract ApproveAndCallFallBack {\n    function receiveApproval(address from, uint256 tokens, address token, bytes data) public;\n}\n \n//Actual token contract\n \ncontract QKCToken is ERC20Interface, SafeMath {\n    string public symbol;\n    string public  name;\n    uint8 public decimals;\n    uint public _totalSupply;\n \n    mapping(address => uint) balances;\n    mapping(address => mapping(address => uint)) allowed;\n \n    constructor() public {\n        symbol = \"QKC\";\n        name = \"QuikNode Coin\";\n        decimals = 2;\n        _totalSupply = 100000;\n        balances[0xd2BF5D1B3ceCE53eE825760E6644c1d4E1028C04] = _totalSupply;\n        emit Transfer(address(0), 0xd2BF5D1B3ceCE53eE825760E6644c1d4E1028C04, _totalSupply);\n    }\n \n    function totalSupply() public constant returns (uint) {\n        return _totalSupply  - balances[address(0)];\n    }\n \n    function balanceOf(address tokenOwner) public constant returns (uint balance) {\n        return balances[tokenOwner];\n    }\n \n    function transfer(address to, uint tokens) public returns (bool success) {\n        balances[msg.sender] = safeSub(balances[msg.sender], tokens);\n        balances[to] = safeAdd(balances[to], tokens);\n        emit Transfer(msg.sender, to, tokens);\n        return true;\n    }\n \n    function approve(address spender, uint tokens) public returns (bool success) {\n        allowed[msg.sender][spender] = tokens;\n        emit Approval(msg.sender, spender, tokens);\n        return true;\n    }\n \n    function transferFrom(address from, address to, uint tokens) public returns (bool success) {\n        balances[from] = safeSub(balances[from], tokens);\n        allowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);\n        balances[to] = safeAdd(balances[to], tokens);\n        emit Transfer(from, to, tokens);\n        return true;\n    }\n \n    function allowance(address tokenOwner, address spender) public constant returns (uint remaining) {\n        return allowed[tokenOwner][spender];\n    }\n \n    function approveAndCall(address spender, uint tokens, bytes data) public returns (bool success) {\n        allowed[msg.sender][spender] = tokens;\n        emit Approval(msg.sender, spender, tokens);\n        ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, this, data);\n        return true;\n    }\n \n    function () public payable {\n        revert();\n    }\n}",
   "sourcePath": "/Users/joelytj/Desktop/EtherLearn/contracts/QKC.sol",
   "ast": {
@@ -12251,7 +12185,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-06-01T03:35:49.313Z",
+  "updatedAt": "2021-06-01T03:35:49.302Z",
   "devdoc": {
     "methods": {}
   },

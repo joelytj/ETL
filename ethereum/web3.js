@@ -26,7 +26,9 @@ if(typeof window !== 'undefined' && typeof window.ethereum !== 'undefined'){
     // Acccounts always exposed. This is those who have old version of MetaMask
 } else {
     // Specify default instance if no web3 instance provided
-    web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/6d97a6def9aa41969baaff23f9d16c9b'));
+    web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/6d97a6def9aa41969baaff23f9d16c9b'));
+    // web3 = new Web3(new Web3.providers.HttpProvider('https://localhost:7545'));
+
 }
 export default web3;
 
