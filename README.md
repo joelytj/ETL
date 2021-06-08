@@ -1,3 +1,2 @@
-# ethereum-rent-app
-An application that allow parties to rent and borrow items using Ethereum-based blockchain
 # EtherLearn
+An application that incentivises collaboration learning using Ethereum-based blockchain and tokens.
