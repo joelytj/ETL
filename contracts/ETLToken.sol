@@ -39,10 +39,10 @@ contract ETLToken {
         return true;
     }
 
-    function approve(address _spender, uint256 _value) public returns (bool success) {
-        allowance[msg.sender][_spender] = _value;
+    function approve(address _user, address _spender, uint256 _value) public returns (bool success) {
+        allowance[_user][_spender] = _value;
 
-        emit Approval(msg.sender, _spender, _value);
+        emit Approval(_user, _spender, _value);
 
         return true;
     }

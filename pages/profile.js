@@ -5,6 +5,7 @@ import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 import Profile from '../ethereum/profile';
 import Token from '../ethereum/ETLToken' 
+import Question from '../ethereum/question';
 import ReactToPrint from 'react-to-print';
 // import Rental from '../ethereum/rental';
 import { Link, Router } from '../routes';
@@ -15,7 +16,7 @@ class ProfileShow extends Component {
         loader: this.props.loader,
         address: null,
         isUser: this.props.isUser,
-        token: 10,
+        token: 0,
         numOfQues: 0,
         rateOfQues: 0,
         numOfAns: 0,
@@ -26,25 +27,26 @@ class ProfileShow extends Component {
         if(this.props.address == 'user'){
             const accounts = await web3.eth.getAccounts();
             const hasAddress = await factory.methods.hasProfile(accounts[0]).call();
+            
             if(!hasAddress){
                 this.setState({ address: accounts[0], isUser: false, loader: false });
             } else {
+                const question = Question("0xB4Cf187e33Dd44dD81A1426aEFCb0fA4C21B1199");
+                const qncontract = await question.methods.getContractBInstance().call();
+                console.log("qncontract", qncontract);
+                const contract = await factory.methods.getContractBBInstance("0xB4Cf187e33Dd44dD81A1426aEFCb0fA4C21B1199").call();
+                console.log("contract", contract)
+
                 const profileAddress = await factory.methods.getProfile(accounts[0]).call();
                 var profile = Profile(profileAddress);
-                // var ETLToken = Token("0xF81A07E1257Db8a259631c3Bf8555279696ed7E1");
+                var ETLToken = Token("0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246");
                 // var token = await ETLToken.methods.balanceOf(accounts[0]).call();
-                // console.log("token", token)
-                var token = await profile.methods.getToken().call(); 
-                console.log("token", token) 
+                var token = await profile.methods.getToken(accounts[0]).call(); 
+                // console.log("token", token) 
                 var numOfQues = await profile.methods.getNumOfQues().call();
-                console.log(numOfQues)
                 var rateOfQues = await profile.methods.getavgQuesRate().call();
-                console.log(rateOfQues)
                 var numOfAns = await profile.methods.getNumOfAns().call();   
-                console.log(numOfAns)
-                // var rateOfAns = await profile.methods.getavgAnsRate().call();
-                var rateOfAns = 1;
-                console.log(rateOfAns)
+                var rateOfAns = await profile.methods.getavgAnsRate().call(); 
                 var loader = false;
                 var isUser = true;
 

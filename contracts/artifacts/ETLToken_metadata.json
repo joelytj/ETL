@@ -20,29 +20,6 @@
 				"type": "function"
 			},
 			{
-				"constant": false,
-				"inputs": [
-					{
-						"name": "_spender",
-						"type": "address"
-					},
-					{
-						"name": "_value",
-						"type": "uint256"
-					}
-				],
-				"name": "approve",
-				"outputs": [
-					{
-						"name": "success",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"constant": true,
 				"inputs": [],
 				"name": "totalSupply",
@@ -117,6 +94,20 @@
 				"type": "function"
 			},
 			{
+				"constant": false,
+				"inputs": [],
+				"name": "getMsgSender",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"constant": true,
 				"inputs": [],
 				"name": "symbol",
@@ -174,6 +165,33 @@
 				],
 				"payable": false,
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_owner",
+						"type": "address"
+					},
+					{
+						"name": "_spender",
+						"type": "address"
+					},
+					{
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"name": "success",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -253,15 +271,15 @@
 	},
 	"sources": {
 		"contracts/ETLToken.sol": {
-			"keccak256": "0x1086bc1e0a2f20d0fa37dbf4696b2eeceba58c98fe2bf3630c64ab02cda33b03",
+			"keccak256": "0xd403d1601d9868a7045288cc093b94d67eb7fe771626e4c7569e4fc53eb50521",
 			"urls": [
-				"bzzr://7d3de8331771fe9e5ee8f05d28f4f8072ca1dc9a7b2c60a1301b2906a5570b50"
+				"bzzr://f66f49649efdacda622467cf6d663d4547d6f0c5c2b08b9b2a5ae1772b7dbaf1"
 			]
 		},
 		"contracts/Question.sol": {
-			"keccak256": "0x11ab1c59816f3928f86ab90f680591e53ed538d8647b17b16399a0089736df9d",
+			"keccak256": "0x72922b060c2359531cb9dbde86bff02684b37fe965869ba1ae771e2b06cbb828",
 			"urls": [
-				"bzzr://2f30e73cb826dff883192ab40f3aa0f8d8e7c6ab6a878379706db7e4d8cb7e51"
+				"bzzr://84f97de582f140bb1f583bafcaacb602055ba14704ab77e422b10e94a9afc400"
 			]
 		}
 	},

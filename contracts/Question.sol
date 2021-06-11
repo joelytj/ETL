@@ -3,23 +3,25 @@ pragma experimental ABIEncoderV2;
 import "./ETLToken.sol";
 
 contract contractB {
-    address public msgSender = msg.sender;
-    address public thisAddress = this;
-    ETLToken tokenContract = ETLToken(0xd9145CCE52D386f254917e481eB44e9943F39138);
+    ETLToken tokenContract = ETLToken(0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246);
     mapping ( address => uint256 ) public balances;
 
-    function depositing(uint tokens) public {
+    function deposit(address _user, uint tokens) public {
 
         // add the deposited tokens into existing balance 
-        balances[msg.sender]+= tokens;
+        balances[_user]+= tokens;
 
         // transfer the tokens from the sender to this contract
-        require(tokenContract.transferFrom(msg.sender, this, tokens));
+        tokenContract.transferFrom(_user, address(this), tokens);
     }
 
-    function returnTokens() public {
-        balances[msg.sender] = 0;
-        tokenContract.transfer(msg.sender, balances[msg.sender]);
+    function share(address _user, uint tokens) public {
+        tokenContract.transferFrom(address(this), _user, tokens);
+    }
+
+    function returnTokens(address _user) public {
+        balances[_user] = 0;
+        tokenContract.transfer(_user, balances[_user]);
     }
 
 }
@@ -27,35 +29,32 @@ contract contractB {
 contract QuestionFactory {
     address[] private deployedQuestions;
     mapping(address => address) public users;
-    address public msgSender = msg.sender;
-    ETLToken tokenContract = ETLToken(0xd9145CCE52D386f254917e481eB44e9943F39138);
+    address public owner = msg.sender;
+    address public contractbinstance;
 
+    ETLToken tokenContract = ETLToken(0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246);
+    
     function createQuestion(string category, string questionTitle, string description, uint deposit, 
                     uint maxDuration, string[] fileHashesQuestion, string[] fileNamesQuestion) public {
         if (users[msg.sender] == 0) {
-            //default value 0 means no assigned value; create a profile for the user address
             address profile = new Profile(msg.sender);
             users[msg.sender] = profile;
-        }    
-        require(deposit<Profile(users[msg.sender]).getToken());
+        }
+
+        require(deposit>0, "Deposit cannot be 0");
+        require(deposit<=Profile(users[msg.sender]).getToken(msg.sender), "Insufficient tokens");
         address newQuestion = new Question(category, questionTitle, description, deposit, maxDuration,
                                     fileHashesQuestion, fileNamesQuestion, msg.sender, users[msg.sender]);
         deployedQuestions.push(newQuestion);
         
         Question question = Question(newQuestion);
-
-        contractB contractb = contractB(0xf8e81D47203A594245E36C48e151709F0C19fBe8); //0x9E627DaBdaC07A61A281A2c9d650A5983f064708
-        require(tokenContract.approve(0xf8e81D47203A594245E36C48e151709F0C19fBe8, deposit)); //0x9E627DaBdaC07A61A281A2c9d650A5983f064708
-        //try using increaseAllowance
-        contractb.depositing(deposit);
-
-        // question.transfer(msg.value); 
-        Profile(users[msg.sender]).updateToken(0, deposit); //0 is subtract deposit from number of tokens of profile
+        contractbinstance = question.getContractBInstance();
+        tokenContract.approve(msg.sender, contractbinstance, deposit); 
+        contractB(contractbinstance).deposit(msg.sender, deposit);
         Profile(users[msg.sender]).increaseNumOfQues();
         question.postQuestion();  //Save posted time here
         
     }
-
 
     function createAnswer(address _question, string _reply, string[] _fileHashes, string[] _fileNames, int _parent) public {
         if (users[msg.sender] == 0) {
@@ -74,7 +73,10 @@ contract QuestionFactory {
         }
 
         Question question = Question(_question);
-        question.transfer(msg.value);
+        contractbinstance = question.getContractBInstance();
+        require(1<Profile(users[msg.sender]).getToken(msg.sender), "Insufficient tokens");
+        tokenContract.approve(msg.sender, contractbinstance, 1); 
+        contractB(contractbinstance).deposit(msg.sender, 1);
         question.ratingQuestion(_ratingQuestion); 
         question.updateDeposite(1);
         Profile(users[msg.sender]).updateToken(0, 1);
@@ -88,7 +90,7 @@ contract QuestionFactory {
         }
 
         Question question = Question(_question);
-        question.transfer(msg.value);
+        // question.transfer(msg.value);
         question.updateAnswerRate(_ratingAnswer, _index);
         Profile(question.getAnswererP(_index)).increaseSumOfAnsRate(_ratingAnswer);
     }
@@ -160,6 +162,10 @@ contract Question {
     uint public numPeople;
     string public category;
     int public count = 0;
+    address public contractbinstance;
+    mapping(address => address) public questionContractB;
+    ETLToken tokenContract = ETLToken(0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246);
+
 
     function() payable { }
     
@@ -173,6 +179,17 @@ contract Question {
         fileNamesQuestion = _fileNamesQuestion;
         owner = _owner;
         ownerP = Profile(_ownerP);
+        
+        if (questionContractB[this] == 0) {
+            contractB contractb = new contractB();
+            contractbinstance = contractb;
+            questionContractB[this] = contractbinstance;
+        }
+         
+    }
+    
+    function getContractBInstance() public returns (address) {
+        return questionContractB[this];
     }
 
     function getSummary() public view returns (
@@ -259,7 +276,10 @@ contract Question {
         proportion = deposit/numPeople;
         for (i = 0; i < answerList.length;i++) {
             if(answerList[i].answerRate >= 4){ //Only take 4 stars above into account
-                answerList[i].answererP.updateToken(1, proportion);
+                tokenContract.approve(questionContractB[this], answerList[i].answerer, proportion); 
+                contractB(questionContractB[this]).share(answerList[i].answerer, proportion);
+                
+                // answerList[i].answererP.updateToken(1, proportion); 
             }
         }
 
@@ -314,13 +334,14 @@ contract Question {
 }
 
 contract Profile {
-    // ETLToken public tokenContract = ETLToken(0xFF02F838ef1031B08a62a8AB24E3AC02328957d2);
-    // uint public token = tokenContract.balanceOf(msg.sender);
-    uint public token = 10;
+    ETLToken public tokenContract = ETLToken(0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246);
+    uint public token;
     uint public numOfQues;
     uint public sumOfQuesRate;
     uint public numOfAns;
     uint public sumOfAnsRate;
+    uint public avgQuesRate;
+    uint public avgAnsRate;
     address public user;
     
     function Profile (address _user) public {
@@ -344,15 +365,28 @@ contract Profile {
     }
 
     function getavgQuesRate() public returns (uint){
-        require(numOfQues != 0);
-        uint avgQuesRate = sumOfQuesRate/numOfQues;
-        return avgQuesRate;
+        if (numOfQues == 0) {
+            avgQuesRate = 0;
+            return avgQuesRate;
+        }
+        else {
+            avgQuesRate = sumOfQuesRate/numOfQues;
+            return avgQuesRate;
+        }
     }
 
     function getavgAnsRate() public returns (uint){
-        require(numOfAns != 0);
-        uint avgAnsRate = sumOfAnsRate/numOfAns;
-        return avgAnsRate;
+        // require(numOfAns != 0);
+        // uint avgAnsRate = sumOfAnsRate/numOfAns;
+        // return avgAnsRate;
+        if (numOfAns == 0) {
+            avgAnsRate = 0;
+            return avgAnsRate;
+        }
+        else {
+            avgAnsRate = sumOfAnsRate/numOfAns;
+            return avgAnsRate;
+        }
     }
 
     function getNumOfQues() public returns (uint){
@@ -372,10 +406,8 @@ contract Profile {
         }
     }
 
-    function getToken() public returns(uint){
-        // token = tokenContract.balanceOf(msg.sender);
-        // balance = tokenContract.balanceOf(msg.sender);
-        // return balance;
+    function getToken(address _user) public returns(uint){
+        token = tokenContract.balanceOf(_user);
         
         return token;
 

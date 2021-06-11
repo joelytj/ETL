@@ -67,6 +67,8 @@ class QuestionShow extends Component {
     static async getInitialProps(props) {
         const question = Question(props.query.address);
         const summary = await question.methods.getSummary().call();
+        // const contract = await factory.methods.getContractBBInstance.call();
+        // console.log(contract);
         const time = await question.methods.getTime().call();
         const profileOwner = await factory.methods.getProfile(summary[4]).call();
         const category = await question.methods.getCategory().call();
@@ -158,7 +160,7 @@ class QuestionShow extends Component {
             from: accounts[0],
         });
         const myRating = await Question(this.props.address).methods.getRatingQuestion().call();
-        const myDeposit = await Question(this.props.address).methods.getDeposit().call();
+        const myDeposit = await Question(this.props.address).methods.getDeposit().call();        
 
         this.setState({ totalDeposit: myDeposit,
                     totalRating: myRating,
@@ -282,7 +284,7 @@ class QuestionShow extends Component {
                             </Table.Cell>
                         </Table.Row>
                         <Table.Row>
-                            <Table.Cell>Deposit (ETH)</Table.Cell>
+                            <Table.Cell>Deposit (ETL)</Table.Cell>
                             <Table.Cell style={{fontSize: '20px'}}>{showDeposit}</Table.Cell>
                         </Table.Row>
                         <Table.Row>

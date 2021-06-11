@@ -259,9 +259,9 @@ class QuestionNew extends Component {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label>Ether</label>
+                        <label>ETLToken</label>
                         <Input 
-                            label="ether" 
+                            label="ETLToken" 
                             labelPosition="right"
                             value={this.state.deposit}
                             onChange={event => this.setState({ deposit: event.target.value })}

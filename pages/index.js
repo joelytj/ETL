@@ -31,8 +31,7 @@ class QuestionIndex extends Component {
         deployedDiscussion: []
     }
 
-    static async getInitialProps({ req, query }) { 
-        
+    static async getInitialProps({req, query }) { 
         let deployedQuestions = await factory.methods.getDeployedQuestions().call();
         deployedQuestions = [...deployedQuestions]
         deployedQuestions = deployedQuestions.reverse();
@@ -171,6 +170,8 @@ class QuestionIndex extends Component {
         }
         console.log("availableQuestions: ", availableQuestions);
 
+
+
         let titles = [];
         let deposit = [];
 
@@ -297,7 +298,7 @@ class QuestionIndex extends Component {
                 <Table.Cell textAlign='center' width={2}>
                     <Statistic size='mini' color='red'>
                         <Statistic.Value><span style={{fontSize: 15, color: '#6A737C'}}>{deposit}</span></Statistic.Value>
-                        <Statistic.Label><span style={{fontSize: 15, color: '#6A737C'}}>ethers</span></Statistic.Label>
+                        <Statistic.Label><span style={{fontSize: 15, color: '#6A737C'}}>ETLToken</span></Statistic.Label>
                     </Statistic>
                 </Table.Cell>
                 <Table.Cell textAlign='left'>
