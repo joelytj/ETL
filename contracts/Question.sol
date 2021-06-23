@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 import "./ETLToken.sol";
 
 contract contractB {
-    ETLToken tokenContract = ETLToken(0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246);
+    ETLToken tokenContract = ETLToken(0x21B4c01188c2c5299F1800263c45bae419Aba544);
     mapping ( address => uint256 ) public balances;
 
     function deposit(address _user, uint tokens) public {
@@ -21,7 +21,7 @@ contract contractB {
 
     function returnTokens(address _user) public {
         balances[_user] = 0;
-        tokenContract.transfer(_user, balances[_user]);
+        tokenContract.transferFrom(address(this), _user, balances[_user]);
     }
 
 }
@@ -32,7 +32,7 @@ contract QuestionFactory {
     address public owner = msg.sender;
     address public contractbinstance;
 
-    ETLToken tokenContract = ETLToken(0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246);
+    ETLToken tokenContract = ETLToken(0x21B4c01188c2c5299F1800263c45bae419Aba544);
     
     function createQuestion(string category, string questionTitle, string description, uint deposit, 
                     uint maxDuration, string[] fileHashesQuestion, string[] fileNamesQuestion) public {
@@ -164,7 +164,7 @@ contract Question {
     int public count = 0;
     address public contractbinstance;
     mapping(address => address) public questionContractB;
-    ETLToken tokenContract = ETLToken(0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246);
+    ETLToken tokenContract = ETLToken(0x21B4c01188c2c5299F1800263c45bae419Aba544);
 
 
     function() payable { }
@@ -254,6 +254,12 @@ contract Question {
     }
 
     function getCheckShareToken() returns(bool){
+        //return tokens to owner - check msg.sender and check if fxn is supposed to be in here
+        //if (!alreadyShareToken) {
+        //     tokenContract.approve(questionContractB[this], msg.sender, deposit); 
+        //     contractB(questionContractB[this]).share(msg.sender, deposit);
+        // }
+        
         return (!alreadyShareToken);
     }
 
@@ -278,7 +284,7 @@ contract Question {
             if(answerList[i].answerRate >= 4){ //Only take 4 stars above into account
                 tokenContract.approve(questionContractB[this], answerList[i].answerer, proportion); 
                 contractB(questionContractB[this]).share(answerList[i].answerer, proportion);
-                
+
                 // answerList[i].answererP.updateToken(1, proportion); 
             }
         }
@@ -334,7 +340,7 @@ contract Question {
 }
 
 contract Profile {
-    ETLToken public tokenContract = ETLToken(0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246);
+    ETLToken public tokenContract = ETLToken(0x21B4c01188c2c5299F1800263c45bae419Aba544);
     uint public token;
     uint public numOfQues;
     uint public sumOfQuesRate;

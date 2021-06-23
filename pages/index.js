@@ -9,6 +9,10 @@ import { Router } from '../routes';
 import moment from 'moment';
 import web3 from '../ethereum/web3';
 import {search} from '../utils/search';
+import * as data from '../config.json'
+
+const {categories} = data;
+
 
 class QuestionIndex extends Component {
     state = {
@@ -16,7 +20,7 @@ class QuestionIndex extends Component {
         disabledShareToken: false,
         didShareToken: false,
         currentIndex: 0,
-        activeCategory: 'CS Introduction',
+        activeCategory: categories[0],
         availableQuestions: [],
         titles: [], 
         deposit: [], 
@@ -57,23 +61,23 @@ class QuestionIndex extends Component {
                 const itemCat = await Question(item).methods.getCategory().call();
                 console.log(itemCat);
                 switch (itemCat) {
-                    case "CS Introduction":   {
+                    case categories[0]:   {
                         deployedCat1.push(item);
                         break;
                     }   
-                    case "Data Structures": {
+                    case categories[1]: {
                         deployedCat2.push(item);
                         break;
                     }   
-                    case "Algorithms":  {
+                    case categories[2]:  {
                         deployedCat3.push(item);
                         break;
                     }   
-                    case "Machine Learning":  {
+                    case categories[3]:  {
                         deployedCat4.push(item);
                         break;
                     } 
-                    case "Blockchain":  {
+                    case categories[4]:  {
                         deployedCat5.push(item);
                         break;
                     } 
@@ -124,7 +128,7 @@ class QuestionIndex extends Component {
         //     deployedDiscussion: deployedDiscussion
         // });
 
-        await this.renderData("CS Introduction");
+        await this.renderData(categories[0]);
 
         console.log("componentDidMount");
     }
@@ -147,23 +151,23 @@ class QuestionIndex extends Component {
         let availableQuestions = [];
 
         switch (category) { 
-            case "CS Introduction": {
+            case categories[0]: {
                 availableQuestions = deployedCat1;
                 break;
             }   
-            case "Data Structures": {
+            case categories[1]: {
                 availableQuestions = deployedCat2;
                 break;
             }   
-            case "Algorithms": {
+            case categories[2]: {
                 availableQuestions = deployedCat3;
                 break;
             }  
-            case "Machine Learning": {
+            case categories[3]: {
                 availableQuestions = deployedCat4;
                 break;
             } 
-            case "Blockchain": {
+            case categories[4]: {
                 availableQuestions = deployedCat5;
                 break;
             } 
@@ -270,7 +274,7 @@ class QuestionIndex extends Component {
         const {activeCategory} = this.state;
 
         const items = this.state.availableQuestions.map((address, i) => {
-            const deposit = ethers.utils.formatUnits(this.state.deposit[i], "ether")*1000000000000000000;
+            const deposit = this.state.deposit[i]; //ethers.utils.formatUnits(this.state.deposit[i], "ether")*1000000000000000000;
             const rating = this.state.questionRating[i];
             const answers = this.state.answererList[i];
             const isOverDue = this.state.isOverDue[i];
@@ -308,12 +312,12 @@ class QuestionIndex extends Component {
                     ((canShareToken) ? ((numAnswer4) ?
                     <Grid.Row textAlign='right'>
                         <Button positive onClick={(e)=>this.shareToken(e, address, i)}  loading={this.state.loadingShareToken&&(this.state.currentIndex==i)} disabled={this.state.disabledShareToken}>
-                                 Share Tokens!
+                                Share Tokens!
                         </Button>
                         <Message color='red' compact size='mini'
                             header={'End time: '+timeEnd}
                         />
-                    </Grid.Row> : <Grid.Row textAlign='right'> <span>No answers more than 4 stars</span></Grid.Row>) : <Grid.Row textAlign='right'><span>Tokens Shared!<Icon name='check' color='green'/></span></Grid.Row>) :
+                    </Grid.Row> : <Grid.Row textAlign='right'> <span>Question expired. No answers more than 4 stars</span></Grid.Row>) : <Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green'/></span></Grid.Row>) :
                     <Grid.Row textAlign='right'>
                     <Message color='yellow' compact size='mini'
                         header={'End time: '+timeEnd}
@@ -321,24 +325,25 @@ class QuestionIndex extends Component {
                 </Grid.Row>} 
                 </Table.Cell> 
             </Table.Row>
+
         });
 
         return ( 
             <Container>
                 <Menu tabular color={'green'}>
-                    <Menu.Item name='CS Introduction' active={activeCategory === 'CS Introduction'} 
+                    <Menu.Item name={`${categories[0]}`} active={activeCategory === categories[0]} 
                                 style={{fontSize:"18px"}}
                                 onClick={this.handleCategoryClick} />
-                    <Menu.Item name='Data Structures' active={activeCategory === 'Data Structures'} 
+                    <Menu.Item name={`${categories[1]}`}  active={activeCategory === categories[1]} 
                                 style={{fontSize:"18px"}}
                                 onClick={this.handleCategoryClick} />
-                    <Menu.Item name='Algorithms' active={activeCategory === 'Algorithms'} 
+                    <Menu.Item name={`${categories[2]}`}  active={activeCategory === categories[2]} 
                                 style={{fontSize:"18px"}}
                                 onClick={this.handleCategoryClick} />
-                    <Menu.Item name='Machine Learning' active={activeCategory === 'Machine Learning'} 
+                    <Menu.Item name={`${categories[3]}`}  active={activeCategory === categories[3]}
                                 style={{fontSize:"18px"}}
                                 onClick={this.handleCategoryClick} />
-                    <Menu.Item name='Blockchain' active={activeCategory === 'Blockchain'} 
+                    <Menu.Item name={`${categories[4]}`}  active={activeCategory === categories[4]} 
                                 style={{fontSize:"18px"}}
                                 onClick={this.handleCategoryClick} />
                 </Menu>
@@ -371,3 +376,4 @@ class QuestionIndex extends Component {
 }
 
 export default QuestionIndex;
+

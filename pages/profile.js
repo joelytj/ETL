@@ -31,15 +31,9 @@ class ProfileShow extends Component {
             if(!hasAddress){
                 this.setState({ address: accounts[0], isUser: false, loader: false });
             } else {
-                const question = Question("0xB4Cf187e33Dd44dD81A1426aEFCb0fA4C21B1199");
-                const qncontract = await question.methods.getContractBInstance().call();
-                console.log("qncontract", qncontract);
-                const contract = await factory.methods.getContractBBInstance("0xB4Cf187e33Dd44dD81A1426aEFCb0fA4C21B1199").call();
-                console.log("contract", contract)
-
                 const profileAddress = await factory.methods.getProfile(accounts[0]).call();
                 var profile = Profile(profileAddress);
-                var ETLToken = Token("0x8e9a571c2bB52376e8E0E03B41dE8365450Ba246");
+                var ETLToken = Token("0x21B4c01188c2c5299F1800263c45bae419Aba544"); 
                 // var token = await ETLToken.methods.balanceOf(accounts[0]).call();
                 var token = await profile.methods.getToken(accounts[0]).call(); 
                 // console.log("token", token) 

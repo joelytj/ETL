@@ -16,7 +16,7 @@ import QuestionFactory from '../build/contracts/QuestionFactory.json';
 const instance = new web3.eth.Contract(
     QuestionFactory.abi,
     // '0x46E7bd94dA1C7040198DcDc8606ad31356faD3Af'
-    '0x51dEe8b87Aef81Cfb1Ec6702783479Ec2dE19d8A'
+    '0x8F866E807F29C40eE15bA415d7326F59fEa0c53b'
 );
 
 export default instance;

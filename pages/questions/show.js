@@ -103,7 +103,7 @@ class QuestionShow extends Component {
             address: props.query.address,
             questionTitle: summary[0],
             description: summary[1],//await getString('Qm'+summary[1]),
-            initialDeposit: ethers.utils.formatUnits(summary[2], "ether"),
+            initialDeposit: summary[2], //ethers.utils.formatUnits(summary[2], "ether"),
             //maxDuration: summary[3],
             category: category,
             owner: summary[4],
@@ -259,7 +259,7 @@ class QuestionShow extends Component {
         } = this.props;
 
         const showRating = (this.state.submitRate ? this.state.totalRating : this.props.initialTotalRating)/1;
-        const showDeposit = (this.state.submitRate ? this.state.totalDeposit: this.props.initialDeposit)*1000000000000000000;
+        const showDeposit = (this.state.submitRate ? this.state.totalDeposit: this.props.initialDeposit); //*1000000000000000000;
 
         var currentTime = (new Date).getTime();
         let remainingTime = publishTimeMs + maxDurationMs - currentTime;
@@ -521,7 +521,11 @@ class QuestionShow extends Component {
         <Container>
         <Header as='h3' dividing>
             Comments
+            <Header.Subheader>
+            Please be fair in voting of answers.
+            </Header.Subheader> 
         </Header>
+
         <Comment.Group>     
           {elmComments}
         </Comment.Group>

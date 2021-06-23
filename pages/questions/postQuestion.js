@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { Form, Button, TextArea, Input, Message, Dropdown,
-        Modal, Header, Segment, Icon, Divider, Label } from 'semantic-ui-react';
+import {
+    Form, Button, TextArea, Input, Message, Dropdown,
+    Modal, Header, Segment, Icon, Divider, Label
+} from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import Profile from '../../ethereum/profile';
 import web3 from '../../ethereum/web3';
 import { getIpfsHash } from '../../utils/ipfs';
+import * as data from '../../config.json'
+
+const { categories } = data;
 
 class QuestionNew extends Component {
     state = {
@@ -36,20 +41,22 @@ class QuestionNew extends Component {
     onSubmit = async (event) => {
         event.preventDefault();
 
-        const { category, questionTitle, description, deposit, maxDuration, fileHashes_array, fileNames_array} = this.state;
+        const { category, questionTitle, description, deposit, maxDuration, fileHashes_array, fileNames_array } = this.state;
 
 
         this.setState({ loading: true, popup: false, errorMessage: '' });
 
-        try{
+        try {
             //const descBuf = Buffer.from(description, 'utf8');
             //const descHash = await getIpfsHash(descBuf);
-            
+
             const accounts = await web3.eth.getAccounts();
             try {
-                 await factory.methods.hasProfile(accounts[0]).call();}
-            catch (err){
-                throw Error("You have to be a user to post a question");}
+                await factory.methods.hasProfile(accounts[0]).call();
+            }
+            catch (err) {
+                throw Error("You have to be a user to post a question");
+            }
 
             /*const profileAddress = await factory.methods.getProfile(accounts[0]).call();
             let profile = Profile(profileAddress);
@@ -59,20 +66,22 @@ class QuestionNew extends Component {
                 throw Error("You don't have enough tokens to deposit to the question");}*/
             await factory.methods
                 .createQuestion(category,
-                                questionTitle,
-                                description,
-                                //descHash.substring(2),
-                                //web3.utils.toWei(deposit, 'ether'),
-                                Number(deposit),
-                                parseFloat(maxDuration) * 60 * 60,
-                                fileHashes_array,
-                                fileNames_array)
+                    questionTitle,
+                    description,
+                    //descHash.substring(2),
+                    //web3.utils.toWei(deposit, 'ether'),
+                    Number(deposit),
+                    parseFloat(maxDuration) * 60 * 60,
+                    fileHashes_array,
+                    fileNames_array)
                 .send({
                     from: accounts[0],
                 });
-                console.log("LOADINGGG " + this.state.loading)
-            this.setState({ disabled: true, 
-                successMessage: "You have submitted the question successfully" });
+            console.log("LOADINGGG " + this.state.loading)
+            this.setState({
+                disabled: true,
+                successMessage: "You have submitted the question successfully"
+            });
         } catch (err) {
             this.setState({ errorMessage: err.message });
             console.log(err.toString());
@@ -82,40 +91,40 @@ class QuestionNew extends Component {
     }
 
 
-    renderFiles (elmFiles) {
-        let {files_array} = this.state;
+    renderFiles(elmFiles) {
+        let { files_array } = this.state;
 
         if (files_array.length == 0) {
-            return(
+            return (
                 <Segment placeholder>
                     <Header icon>
-                    <Icon name='images outline' />
+                        <Icon name='images outline' />
                         No files are uploaded for this question.
                     </Header>
-                    <input 
-                        style={{ display: 'none' }} 
-                        type='file' 
+                    <input
+                        style={{ display: 'none' }}
+                        type='file'
                         onChange={() => this.onFileSelected1()}
-                        ref={fileInput => this.fileInput = fileInput}/>
+                        ref={fileInput => this.fileInput = fileInput} />
                     <Button primary onClick={() => this.fileInput.click()}>Upload Files</Button>
-                </Segment> 
+                </Segment>
             );
         } else {
-            return(
+            return (
                 <Segment placeholder>
                     <center>
-                        <div style={{marginBottom: '20px'}}>
+                        <div style={{ marginBottom: '20px' }}>
                             {elmFiles}
                         </div>
-        
-                        <input 
-                            style={{ display: 'none' }} 
-                            type='file' 
+
+                        <input
+                            style={{ display: 'none' }}
+                            type='file'
                             onChange={() => this.onFileSelected1()}
-                            ref={fileInput => this.fileInput = fileInput}/>
+                            ref={fileInput => this.fileInput = fileInput} />
                         <Button primary onClick={() => this.fileInput.click()}>Upload Files</Button>
                     </center>
-                </Segment> 
+                </Segment>
             );
         }
     }
@@ -124,19 +133,19 @@ class QuestionNew extends Component {
 
         const reader = new FileReader();
 
-        const file = this.fileInput.files[0]; 
+        const file = this.fileInput.files[0];
 
-        if (file instanceof Blob ) {
+        if (file instanceof Blob) {
             console.log(file);
 
-            let {files_array, fileNames_array, fileHashes_array} = this.state;
+            let { files_array, fileNames_array, fileHashes_array } = this.state;
             files_array.push(file);
             fileNames_array.push(file.name);
-            this.setState({ 
-                files_array: files_array, 
+            this.setState({
+                files_array: files_array,
                 fileNames_array: fileNames_array
             });
-            
+
             console.log("fileNames_array: ", fileNames_array);
 
             reader.onloadend = async () => {
@@ -144,9 +153,9 @@ class QuestionNew extends Component {
                     fileUrl: reader.result,
                     loadingFile: true,
                     buffer: Buffer.from(reader.result)
-                }); 
+                });
                 const fileHash = this.state.buffer ? (await getIpfsHash(file)) : '0';
-            
+
                 fileHashes_array.push(fileHash);
                 this.setState({ fileHashes_array: fileHashes_array });
 
@@ -159,18 +168,18 @@ class QuestionNew extends Component {
 
     onFileRemoved1 = (file) => {
         var i = 0;
-        let {files_array, fileHashes_array, fileNames_array} = this.state;
+        let { files_array, fileHashes_array, fileNames_array } = this.state;
         console.log('file: ', file);
-        for (i = 0 ; i < files_array.length ; i++) {
+        for (i = 0; i < files_array.length; i++) {
             if (file === files_array[i]) {
                 files_array.splice(i, 1);
                 fileNames_array.splice(i, 1);
                 fileHashes_array.splice(i, 1);
                 break;
-            } 
+            }
         }
 
-        this.setState({ 
+        this.setState({
             files_array: files_array,
             fileNames_array: fileNames_array,
             fileHashes_array: fileHashes_array
@@ -182,53 +191,53 @@ class QuestionNew extends Component {
 
     render() {
 
-        let {files_array} = this.state;
+        let { files_array } = this.state;
         let elmFiles = null;
         if (files_array !== null) {
             elmFiles = files_array.map((item, index) =>
                 <Label as='a' key={index} size='big'>
                     {item.name}
-                    <Icon name='delete' 
-                    onClick={() => this.onFileRemoved1(item)} />
+                    <Icon name='delete'
+                        onClick={() => this.onFileRemoved1(item)} />
                 </Label>
             );
         }
 
         const tagOptions = [
             {
-                key: 'CS Introduction',
-                text: 'CS Introduction',
-                value: 'CS Introduction',
+                key: `${categories[0]}`,
+                text: `${categories[0]}`,
+                value: `${categories[0]}`,
                 label: { color: 'red', empty: true, circular: true },
             },
             {
-                key: 'Data Structures',
-                text: 'Data Structures',
-                value: 'Data Structures',
+                key: `${categories[1]}`,
+                text: `${categories[1]}`,
+                value: `${categories[1]}`,
                 label: { color: 'blue', empty: true, circular: true },
             },
             {
-                key: 'Algorithms',
-                text: 'Algorithms',
-                value: 'Algorithms',
+                key: `${categories[2]}`,
+                text: `${categories[2]}`,
+                value: `${categories[2]}`,
                 label: { color: 'green', empty: true, circular: true },
             },
             {
-                key: 'Machine Learning',
-                text: 'Machine Learning',
-                value: 'Machine Learning',
+                key: `${categories[3]}`,
+                text: `${categories[3]}`,
+                value: `${categories[3]}`,
                 label: { color: 'yellow', empty: true, circular: true },
             },
             {
-                key: 'Blockchain',
-                text: 'Blockchain',
-                value: 'Blockchain',
+                key: `${categories[4]}`,
+                text: `${categories[4]}`,
+                value: `${categories[4]}`,
                 label: { color: 'grey', empty: true, circular: true },
             }
-          ]
+        ]
 
         console.log("this.state.category: ", this.state.category);
-        
+
         return (
             <Layout>
                 <h3>Post a question</h3>
@@ -236,15 +245,15 @@ class QuestionNew extends Component {
                     <Form.Field>
                         <label>Category</label>
                         <Dropdown placeholder='Choose one ...'
-                                  openOnFocus
-                                  selection
-                                  options={tagOptions}
-                                  onChange={event => this.setState({ category: event.target.textContent })}>
+                            openOnFocus
+                            selection
+                            options={tagOptions}
+                            onChange={event => this.setState({ category: event.target.textContent })}>
                         </Dropdown>
                     </Form.Field>
                     <Form.Field>
                         <label>Title</label>
-                        <Input 
+                        <Input
                             placeholder="Enter Title"
                             value={this.state.questionTitle}
                             onChange={event => this.setState({ questionTitle: event.target.value })}
@@ -252,7 +261,7 @@ class QuestionNew extends Component {
                     </Form.Field>
                     <Form.Field>
                         <label>Question Description</label>
-                        <TextArea 
+                        <TextArea
                             placeholder="Enter Description"
                             value={this.state.description}
                             onChange={event => this.setState({ description: event.target.value })}
@@ -260,8 +269,8 @@ class QuestionNew extends Component {
                     </Form.Field>
                     <Form.Field>
                         <label>ETLToken</label>
-                        <Input 
-                            label="ETLToken" 
+                        <Input
+                            label="ETLToken"
                             labelPosition="right"
                             value={this.state.deposit}
                             onChange={event => this.setState({ deposit: event.target.value })}
@@ -269,8 +278,8 @@ class QuestionNew extends Component {
                     </Form.Field>
                     <Form.Field>
                         <label>Maximum Duration</label>
-                        <Input 
-                            label="hour(s)" 
+                        <Input
+                            label="hour(s)"
                             labelPosition="right"
                             value={this.state.maxDuration}
                             onChange={event => this.setState({ maxDuration: event.target.value })}
