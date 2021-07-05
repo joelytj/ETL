@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 import "./ETLToken.sol";
 
 contract contractB {
-    ETLToken tokenContract = ETLToken(0x21B4c01188c2c5299F1800263c45bae419Aba544);
+    ETLToken tokenContract = ETLToken(0x74Bb56B2Ea8F4784acB6878FA8f9577dCdb1a0a3);
     mapping ( address => uint256 ) public balances;
 
     function deposit(address _user, uint tokens) public {
@@ -29,11 +29,11 @@ contract contractB {
 contract QuestionFactory {
     address[] private deployedQuestions;
     mapping(address => address) public users;
-    address public owner = msg.sender;
+    mapping(address => address) public owner;
     address public contractbinstance;
 
-    ETLToken tokenContract = ETLToken(0x21B4c01188c2c5299F1800263c45bae419Aba544);
-    
+    ETLToken tokenContract = ETLToken(0x74Bb56B2Ea8F4784acB6878FA8f9577dCdb1a0a3);
+
     function createQuestion(string category, string questionTitle, string description, uint deposit, 
                     uint maxDuration, string[] fileHashesQuestion, string[] fileNamesQuestion) public {
         if (users[msg.sender] == 0) {
@@ -48,12 +48,15 @@ contract QuestionFactory {
         deployedQuestions.push(newQuestion);
         
         Question question = Question(newQuestion);
+        //transfer deposit from user to contractB instance
         contractbinstance = question.getContractBInstance();
         tokenContract.approve(msg.sender, contractbinstance, deposit); 
         contractB(contractbinstance).deposit(msg.sender, deposit);
+
         Profile(users[msg.sender]).increaseNumOfQues();
         question.postQuestion();  //Save posted time here
         
+
     }
 
     function createAnswer(address _question, string _reply, string[] _fileHashes, string[] _fileNames, int _parent) public {
@@ -74,13 +77,21 @@ contract QuestionFactory {
 
         Question question = Question(_question);
         contractbinstance = question.getContractBInstance();
+        //Require user to have at least one token to rate question
         require(1<Profile(users[msg.sender]).getToken(msg.sender), "Insufficient tokens");
+        
+        //transfer 1 token as deposit from user to contractB instance to rate question
         tokenContract.approve(msg.sender, contractbinstance, 1); 
         contractB(contractbinstance).deposit(msg.sender, 1);
+        
         question.ratingQuestion(_ratingQuestion); 
         question.updateDeposite(1);
         Profile(users[msg.sender]).updateToken(0, 1);
         Profile(question.getOwnerP()).increaseSumOfQuesRate(_ratingQuestion);
+        
+        //store who deposited tokens
+        question.setQuestionDepositers(msg.sender);
+    
     }
 
     function ratingAnswerAt(address _question, uint _ratingAnswer, uint _index) public payable {
@@ -90,7 +101,7 @@ contract QuestionFactory {
         }
 
         Question question = Question(_question);
-        // question.transfer(msg.value);
+        //rating answer doesnt require deposit
         question.updateAnswerRate(_ratingAnswer, _index);
         Profile(question.getAnswererP(_index)).increaseSumOfAnsRate(_ratingAnswer);
     }
@@ -104,6 +115,16 @@ contract QuestionFactory {
 
         Question question = Question(_question);
         question.shareToken();
+    }
+
+    function returnDepositAt(address _question) public payable {
+        if (users[msg.sender] == 0) {
+            address profile = new Profile(msg.sender);
+            users[msg.sender] = profile;
+        }
+
+        Question question = Question(_question);
+        question.returnDeposit();
     }
 
     function hasProfile(address _user) public returns(bool) {
@@ -122,7 +143,6 @@ contract QuestionFactory {
     function getDeployedQuestions() public view returns(address[]) {
         return deployedQuestions;
     }
-
 
 }    
 
@@ -157,16 +177,22 @@ contract Question {
     uint public numRate;
     uint public sumRate;
     bool public alreadyShareToken = false;
+    bool public alreadyReturnDeposit =  false;
+    bool public numAnswer4Bool;
     uint public tokenSum;
     uint public proportion;
     uint public numPeople;
     string public category;
     int public count = 0;
     address public contractbinstance;
+    //map each question to its own contractB instance
     mapping(address => address) public questionContractB;
-    ETLToken tokenContract = ETLToken(0x21B4c01188c2c5299F1800263c45bae419Aba544);
+    mapping(address => address[]) public questionDepositers;
+    uint256 public initialDeposit;
+    ETLToken tokenContract = ETLToken(0x74Bb56B2Ea8F4784acB6878FA8f9577dCdb1a0a3);
 
 
+    //fallback function
     function() payable { }
     
     function Question (string _category, string _questionTitle, string _description, uint _deposit, uint _maxDuration, string[] _fileHashesQuestion, string[] _fileNamesQuestion, address _owner, address _ownerP) public {
@@ -180,6 +206,7 @@ contract Question {
         owner = _owner;
         ownerP = Profile(_ownerP);
         
+        //create contractB instance each time a new Question is created
         if (questionContractB[this] == 0) {
             contractB contractb = new contractB();
             contractbinstance = contractb;
@@ -247,30 +274,62 @@ contract Question {
     function getDeposit() public returns (uint){
         return deposit;
     }
+    
+    function getQuestionDepositers(address _question) public view returns (address[]) {
+        return questionDepositers[_question];
+    }
+    
+    function setQuestionDepositers(address _questionDepositer) public {
+        questionDepositers[this].push(_questionDepositer);
+    }
 
     function isOverdue() public returns (bool) {
         uint publishingTime = now - start;
+
         return publishingTime > maxDuration;
+
     }
 
     function getCheckShareToken() returns(bool){
-        //return tokens to owner - check msg.sender and check if fxn is supposed to be in here
-        //if (!alreadyShareToken) {
-        //     tokenContract.approve(questionContractB[this], msg.sender, deposit); 
-        //     contractB(questionContractB[this]).share(msg.sender, deposit);
-        // }
-        
         return (!alreadyShareToken);
     }
 
-    function getNumAnswer4() returns (bool){
+    function getCheckReturnDeposit() returns(bool) {
+        return(!alreadyReturnDeposit);
+    }
+
+    function getNumAnswer4() public view returns (bool){
         uint getNumAnswer4;
         for (uint i = 0;i < answerList.length;i++) {
             if(answerList[i].answerRate >= 4) 
                 getNumAnswer4++;
-            if(getNumAnswer4>0) return true; 
-            else return false;
+            if(getNumAnswer4>0) {
+                numAnswer4Bool = true;
+                return true; 
+            }
+            else {
+                numAnswer4Bool = false;
+                return false;
+            }
         }
+    }
+
+    function returnDeposit() public {
+        uint publishingTime = now - start;
+
+        if (publishingTime > maxDuration) {
+            for (uint i=0; i<questionDepositers[this].length;i++) {
+                tokenContract.approve(questionContractB[this], questionDepositers[this][i], 1); 
+                contractB(questionContractB[this]).share(questionDepositers[this][i], 1);
+            }
+            //transfer initial deposit back to owner of question
+            initialDeposit = deposit - questionDepositers[this].length;
+            tokenContract.approve(questionContractB[this], owner, initialDeposit); 
+            contractB(questionContractB[this]).share(owner, initialDeposit);
+        
+        }
+
+        alreadyReturnDeposit = true;
     }
 
     function shareToken() public {
@@ -285,7 +344,6 @@ contract Question {
                 tokenContract.approve(questionContractB[this], answerList[i].answerer, proportion); 
                 contractB(questionContractB[this]).share(answerList[i].answerer, proportion);
 
-                // answerList[i].answererP.updateToken(1, proportion); 
             }
         }
 
@@ -340,7 +398,7 @@ contract Question {
 }
 
 contract Profile {
-    ETLToken public tokenContract = ETLToken(0x21B4c01188c2c5299F1800263c45bae419Aba544);
+    ETLToken public tokenContract = ETLToken(0x74Bb56B2Ea8F4784acB6878FA8f9577dCdb1a0a3);
     uint public token;
     uint public numOfQues;
     uint public sumOfQuesRate;
@@ -382,9 +440,6 @@ contract Profile {
     }
 
     function getavgAnsRate() public returns (uint){
-        // require(numOfAns != 0);
-        // uint avgAnsRate = sumOfAnsRate/numOfAns;
-        // return avgAnsRate;
         if (numOfAns == 0) {
             avgAnsRate = 0;
             return avgAnsRate;

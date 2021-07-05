@@ -33,10 +33,9 @@ class ProfileShow extends Component {
             } else {
                 const profileAddress = await factory.methods.getProfile(accounts[0]).call();
                 var profile = Profile(profileAddress);
-                var ETLToken = Token("0x21B4c01188c2c5299F1800263c45bae419Aba544"); 
+                var ETLToken = Token("0x74Bb56B2Ea8F4784acB6878FA8f9577dCdb1a0a3"); 
                 // var token = await ETLToken.methods.balanceOf(accounts[0]).call();
                 var token = await profile.methods.getToken(accounts[0]).call(); 
-                // console.log("token", token) 
                 var numOfQues = await profile.methods.getNumOfQues().call();
                 var rateOfQues = await profile.methods.getavgQuesRate().call();
                 var numOfAns = await profile.methods.getNumOfAns().call();   

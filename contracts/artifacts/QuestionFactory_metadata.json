@@ -105,6 +105,20 @@
 				"type": "function"
 			},
 			{
+				"constant": true,
+				"inputs": [],
+				"name": "contractbinstance",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"constant": false,
 				"inputs": [
 					{
@@ -120,6 +134,25 @@
 				"outputs": [],
 				"payable": true,
 				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "owner",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -158,20 +191,6 @@
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -234,15 +253,15 @@
 	},
 	"sources": {
 		"contracts/ETLToken.sol": {
-			"keccak256": "0xe7096fd8231de88f280f2805e47e6fbebba6acf160894a18dd53a0df4b49caf0",
+			"keccak256": "0xcbd8a725c1ae878e2c9d519d6a80ee983f4992578437e38042eb078cdbdd87ea",
 			"urls": [
-				"bzzr://27b41a06bb6dfa8c32f03d95f8c91c3b76e83ee83837db3fe0a8ae6c858b7cae"
+				"bzzr://36712946c889e674ae56304dcef311f2eb16753574804c295bd6333071af71f7"
 			]
 		},
 		"contracts/Question.sol": {
-			"keccak256": "0x6cc365cc6ae5219ee38135b123df748784a703061be85184f0aca5a984f2c60f",
+			"keccak256": "0x077dbe20d266f553bbcbaea98ea611deaf2021db04e952d88e02ca2ba51c76cc",
 			"urls": [
-				"bzzr://8bdb3d08d6eb741c52e435f1a05a2492c68865ab1f73337da6a07ec29ca78575"
+				"bzzr://e52934a94040648a971b255c96d8bf0c8d18731053e664f889719e28e4db8252"
 			]
 		}
 	},

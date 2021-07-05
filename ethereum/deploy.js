@@ -2,17 +2,11 @@ const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
 const compiledFactory = require('./build/QuestionFactory.json');
 
-// const provider = new HDWalletProvider(
-//     'rally three arrest upper zone flat family water enact napkin stand only',
-//     'https://rinkeby.infura.io/v3/d928a9c204db4d418b536b7dbcf89977'
-// ); //mneumonic can specify many accounts
-
 const provider = new HDWalletProvider(
     'coconut glass harbor gloom spawn slim crunch assault risk absurd hero unlock',
     'http://localhost:7545'//'https://ropsten.infura.io/v3/d928a9c204db4d418b536b7dbcf89977'
 );
 //'https://ropsten.infura.io/v3/d928a9c204db4d418b536b7dbcf89977'
-//'http://localhost:8545'
 
 const web3 = new Web3(provider);
 
