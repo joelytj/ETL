@@ -10,7 +10,7 @@ module.exports = function(deployer) {
   
   deployer.deploy(ETLToken, 1000000000, {overwrite: false}).then(function() { //
       // Token price is 0.1 Ether
-      var tokenPrice = 1000000000000000; //original: 1000000000000000 (Token price is 0.001 Ether)
+      var tokenPrice = 1000000000; //original: 1000000000000000 (Token price is 0.001 Ether)
       return deployer.deploy(ETLTokenSale, ETLToken.address, tokenPrice);  //
     }).then(function() {
       var tokensAvailable = 100000000;

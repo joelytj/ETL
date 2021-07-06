@@ -13,7 +13,7 @@ contract ETLTokenSale {
     constructor(ETLToken _tokenContract, uint256 _tokenPrice) public {
         admin = msg.sender;
         tokenContract = _tokenContract;
-        tokenPrice = _tokenPrice / 100;
+        tokenPrice = _tokenPrice;
     }
 
     function multiply(uint x, uint y) internal pure returns (uint z) {
