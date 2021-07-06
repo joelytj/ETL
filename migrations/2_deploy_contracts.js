@@ -7,7 +7,7 @@ const ETLTokenSale = artifacts.require("./ETLTokenSale.sol");
 module.exports = function(deployer) {
   deployer.deploy(QuestionFactory);
   deployer.deploy(contractB); 
-
+  
   deployer.deploy(ETLToken, 1000000000, {overwrite: false}).then(function() { 
       // Token price is 0.1 Ether
       var tokenPrice = 10000000000000; //original: 1000000000000000 (Token price is 0.001 Ether)

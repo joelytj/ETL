@@ -3,9 +3,9 @@ App = {
     contracts: {},
     account: '0x0',
     loading: false,
-    tokenPrice: 1000000000000000,
+    tokenPrice: 10000000000000,
     tokensSold: 0,
-    tokensAvailable: 750000,
+    tokensAvailable: 100000000,
   
     init: function() {
       console.log("App initialized...")
