@@ -13,7 +13,7 @@ contract ETLTokenSale {
     constructor(ETLToken _tokenContract, uint256 _tokenPrice) public {
         admin = msg.sender;
         tokenContract = _tokenContract;
-        tokenPrice = _tokenPrice * 100;
+        tokenPrice = _tokenPrice;
     }
 
     function multiply(uint x, uint y) internal pure returns (uint z) {
@@ -21,11 +21,10 @@ contract ETLTokenSale {
     }
 
     function buyTokens(uint256 _numberOfTokens) public payable {
-        uint256 scaledAmount = multiply(_numberOfTokens, (uint256(10) ** tokenContract.decimals()));
         require(msg.value == multiply(_numberOfTokens, tokenPrice));
 
-        require(tokenContract.balanceOf(this) >= scaledAmount);
-        require(tokenContract.transfer(msg.sender, scaledAmount));
+        require(tokenContract.balanceOf(this) >= _numberOfTokens);
+        require(tokenContract.transfer(msg.sender, _numberOfTokens));
 
         tokensSold += _numberOfTokens;
 
