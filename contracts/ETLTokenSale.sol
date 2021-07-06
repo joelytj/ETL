@@ -21,11 +21,11 @@ contract ETLTokenSale {
     }
 
     function buyTokens(uint256 _numberOfTokens) public payable {
-        _numberOfTokens = multiply(_numberOfTokens, (uint256(10) ** tokenContract.decimals()));
+        uint256 scaledAmount = multiply(_numberOfTokens, (uint256(10) ** tokenContract.decimals()));
         require(msg.value == multiply(_numberOfTokens, tokenPrice));
 
-        require(tokenContract.balanceOf(this) >= _numberOfTokens);
-        require(tokenContract.transfer(msg.sender, _numberOfTokens));
+        require(tokenContract.balanceOf(this) >= scaledAmount);
+        require(tokenContract.transfer(msg.sender, scaledAmount));
 
         tokensSold += _numberOfTokens;
 
