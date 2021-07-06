@@ -5,6 +5,7 @@ contract ETLToken {
     string  public name = "ETLToken";
     string  public symbol = "ETL";
     string  public standard = "ETL Token v1.0";
+    uint public decimals = 2;
     uint256 public totalSupply;
 
     event Transfer(

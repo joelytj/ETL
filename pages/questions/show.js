@@ -361,7 +361,7 @@ class QuestionShow extends Component {
                         ref={fileInput => this.fileInput = fileInput}/>
                     <Button icon='file' onClick={() => this.fileInput.click()}></Button>
                     <Button content='Add Reply' labelPosition='left' icon='edit' primary 
-                        onClick={(e) => this.onSubmitReply(e, parent)} />
+                        onClick={(e) => this.onSubmitReply(e, parent)} loading={this.state.loading} />
                 </center>
                 <br />
             </Form>
@@ -559,7 +559,7 @@ class QuestionShow extends Component {
                 </Button>
                 <Button content='Add Reply' labelPosition='left' icon='edit' primary 
                         disabled={this.state.disabledMainReply}
-                        onClick={(e) => this.onSubmitReply(e, -1)} />        {/* parent = -1 */}  
+                        onClick={(e) => this.onSubmitReply(e, -1)} loading={this.state.loading} />        {/* parent = -1 */}  
             </center>
         </Form>
         <Modal
