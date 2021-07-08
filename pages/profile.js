@@ -33,7 +33,7 @@ class ProfileShow extends Component {
             } else {
                 const profileAddress = await factory.methods.getProfile(accounts[0]).call();
                 var profile = Profile(profileAddress);
-                var ETLToken = Token("0x92d2FfE771C4E4768E1BF3d4397b76A5947A7DA3"); 
+                var ETLToken = Token("0xbe8eC8351CFd6640db115b58D322014cf54743D3"); 
                 // var token = await ETLToken.methods.balanceOf(accounts[0]).call();
                 var token = await profile.methods.getToken(accounts[0]).call(); 
                 var numOfQues = await profile.methods.getNumOfQues().call();

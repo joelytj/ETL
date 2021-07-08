@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 import "./ETLToken.sol";
 
 contract contractB {
-    ETLToken tokenContract = ETLToken(0x92d2FfE771C4E4768E1BF3d4397b76A5947A7DA3);
+    ETLToken tokenContract = ETLToken(0xbe8eC8351CFd6640db115b58D322014cf54743D3);
     mapping ( address => uint256 ) public balances;
 
     function deposit(address _user, uint tokens) public {
@@ -32,7 +32,7 @@ contract QuestionFactory {
     mapping(address => address) public owner;
     address public contractbinstance;
 
-    ETLToken tokenContract = ETLToken(0x92d2FfE771C4E4768E1BF3d4397b76A5947A7DA3);
+    ETLToken tokenContract = ETLToken(0xbe8eC8351CFd6640db115b58D322014cf54743D3);
 
     function createQuestion(string category, string questionTitle, string description, uint deposit, 
                     uint maxDuration, string[] fileHashesQuestion, string[] fileNamesQuestion) public {
@@ -189,7 +189,7 @@ contract Question {
     mapping(address => address) public questionContractB;
     mapping(address => address[]) public questionDepositers;
     uint256 public initialDeposit;
-    ETLToken tokenContract = ETLToken(0x92d2FfE771C4E4768E1BF3d4397b76A5947A7DA3);
+    ETLToken tokenContract = ETLToken(0xbe8eC8351CFd6640db115b58D322014cf54743D3);
 
 
     //fallback function
@@ -398,7 +398,7 @@ contract Question {
 }
 
 contract Profile {
-    ETLToken public tokenContract = ETLToken(0x92d2FfE771C4E4768E1BF3d4397b76A5947A7DA3);
+    ETLToken public tokenContract = ETLToken(0xbe8eC8351CFd6640db115b58D322014cf54743D3);
     uint public token;
     uint public numOfQues;
     uint public sumOfQuesRate;
