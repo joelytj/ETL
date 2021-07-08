@@ -4,7 +4,7 @@ import QuestionFactory from '../build/contracts/QuestionFactory.json';
 
 const instance = new web3.eth.Contract(
     QuestionFactory.abi,
-    '0x5ec49e7f6fC4fde8DD014A05540297cA6357C4CA'
+    '0x513512f8a798003faAd74EaCC0ed112A1417f6b2'
 );
 
 export default instance;
