@@ -479,7 +479,7 @@ class QuestionShow extends Component {
                                             {moment.unix(item.answerTime).format('dddd, Do MMMM YYYY, h:mm:ss a')}
                                         </div>
                                     </Comment.Metadata>
-                                    <Comment.Text>
+                                    <Comment.Text style={{whiteSpace: 'pre-wrap'}}>
                                         {replyText_arr[index]}
                                     </Comment.Text>
                                     <Comment.Actions>

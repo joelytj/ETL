@@ -338,7 +338,8 @@ class QuestionIndex extends Component {
                 </Table.Cell>
                 <Table.Cell textAlign='left'>
                     <Grid.Row textAlign='left'>
-                        <span style={{ fontSize: 18, color: '#6A737C', cursor: 'pointer' }} onClick={() => Router.pushRoute(`/questions/${address}`)}><a>{this.state.titles[i]}</a></span></Grid.Row>
+                        <span style={{ fontSize: 18, color: '#6A737C', cursor: 'pointer' }} onClick={() => Router.pushRoute(`/questions/${address}`)}><a>{this.state.titles[i]}</a></span>
+                    </Grid.Row>
                     {isOverDue ?
                         ((canShareToken) ? ((numAnswer4) ?
                             <Grid.Row textAlign='right'>
@@ -350,7 +351,11 @@ class QuestionIndex extends Component {
                                 />
                             </Grid.Row> : ((canReturnDeposit) ? <Grid.Row textAlign='right'><Button positive onClick={(e) => this.returnDeposit(e, address, i)} loading={this.state.loadingReturnDeposit && (this.state.currentIndexDep == i)} disabled={this.state.disabledReturnDeposit}>
                                     Return Deposit!
-                                </Button> <span>Question expired. No answers more than 4 stars.</span></Grid.Row> : <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row>)) : <Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row>) :
+                                </Button> 
+                                <Message color='red' compact size='mini'
+                                    header={'End time: '+timeEnd}
+                                />
+                        </Grid.Row> : <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row>)) : <Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row>) :
                         <Grid.Row textAlign='right'>
                             <Message color='yellow' compact size='mini'
                                 header={'End time: ' + timeEnd}
