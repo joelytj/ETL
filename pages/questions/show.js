@@ -279,7 +279,7 @@ class QuestionShow extends Component {
                         </Table.Row>
                         <Table.Row>
                             <Table.Cell width={2}>Question</Table.Cell>
-                            <Table.Cell style={{fontSize: '20px', lineHeight: '1.5'}}>
+                            <Table.Cell style={{fontSize: '20px', lineHeight: '1.5', whiteSpace: 'pre-wrap'}}>
                                 {description}
                             </Table.Cell>
                         </Table.Row>
