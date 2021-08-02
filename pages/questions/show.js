@@ -368,7 +368,7 @@ class QuestionShow extends Component {
         );
     }
 
-    showChildAnswers = (parent) => {
+    showChildAnswers = (parent, elmFiles) => {
         const {answerList, replyText_arr, toggleChildRep} = this.state;
 
         let elmChildren = null;
@@ -381,11 +381,11 @@ class QuestionShow extends Component {
                                 <Comment.Avatar src={this.props.avatarListIcon[index]} style={{backgroundColor: 'crimson'}} />
                                 <Comment.Content>
                                 <b>{this.props.avatarListName[index]}</b>
-                                    <Comment.Metadata>
+                                    <Comment.Metadata style={{whiteSpace: 'pre-wrap'}}>
                                         <div>
                                             {moment.unix(item.answerTime).format('dddd, Do MMMM YYYY, h:mm:ss a')}
                                         </div>
-                                    </Comment.Metadata>
+                                    </Comment.Metadata >
                                     <Comment.Text>
                                         {replyText_arr[index]}
                                     </Comment.Text>
@@ -410,7 +410,9 @@ class QuestionShow extends Component {
                                             </Label>
                                         )}    
                                     </Comment.Actions>
-                                    
+                                    <br /> 
+                                    {/* {this.showChildAnswers(item.id)} */}
+                                    {toggleChildRep[index] == true && this.replyBox(elmFiles, item.id)}
                                 </Comment.Content>
                             </Comment>
                         <br /> 
