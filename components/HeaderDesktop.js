@@ -21,6 +21,8 @@ class HeaderDesktop extends Component {
            if (this.state.value!='' && this.state.value!=undefined)
                 Router.pushRoute(`/${'search+'+encodeURIComponent(this.state.value)}`);
            // put the login here
+           if (this.state.value=="")
+                Router.pushRoute(`/`)
         }
     }
     render() {
@@ -43,7 +45,7 @@ class HeaderDesktop extends Component {
                                     </Link>
 
                                     <Menu.Menu position ="right">
-                                        <Link route="/questions/lend">
+                                        <Link route="/questions/post">
                                             <a className = "item">
                                                 Post a question
                                             </a>
@@ -69,6 +71,7 @@ class HeaderDesktop extends Component {
                                     {
                                          //console.log('value ',this.state.value);
                                          if (this.state.value!='') Router.pushRoute(`/${'search+'+encodeURIComponent(this.state.value)}`);
+                                         if (this.state.value=="") Router.pushRoute(`/`);
                                         }}/>}
                                         size='small'
                                         onKeyDown={this.keyPress} 

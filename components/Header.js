@@ -16,7 +16,7 @@ export default () => {
             </Link>
 
             <Menu.Menu position ="right">
-                <Link route="/questions/lend">
+                <Link route="/questions/post">
                     <a className = "item">
                         Add Rent Items
                     </a>

@@ -224,7 +224,7 @@ class QuestionShow extends Component {
                     <center>
                         {fileNamesQuestion.map((fileName, index1) => 
                             <div style={{marginBottom: '10px'}}>
-                                <Label as='a' size='big' href={"https://ipfs.io/ipfs/"+fileHashesQuestion[index1]}>
+                                <Label as='a' size='big' href={"https://ipfs.io/ipfs/"+fileHashesQuestion[index1]} target="_blank">
                                     <Icon name='download' />
                                     {fileName}
                                 </Label>
@@ -369,7 +369,7 @@ class QuestionShow extends Component {
     }
 
     showChildAnswers = (parent) => {
-        const {answerList, replyText_arr} = this.state;
+        const {answerList, replyText_arr, toggleChildRep} = this.state;
 
         let elmChildren = null;
         if (answerList !== null) {
@@ -380,7 +380,7 @@ class QuestionShow extends Component {
                             <Comment>
                                 <Comment.Avatar src={this.props.avatarListIcon[index]} style={{backgroundColor: 'crimson'}} />
                                 <Comment.Content>
-                                    { <Comment.Author as='a'>{this.props.avatarListName[index]}</Comment.Author> }
+                                <b>{this.props.avatarListName[index]}</b>
                                     <Comment.Metadata>
                                         <div>
                                             {moment.unix(item.answerTime).format('dddd, Do MMMM YYYY, h:mm:ss a')}
@@ -390,6 +390,12 @@ class QuestionShow extends Component {
                                         {replyText_arr[index]}
                                     </Comment.Text>
                                     <Comment.Actions>
+                                        <Comment.Action>
+                                            {/* Reply */}
+                                            <span onClick={() => this.handleToggleChildRep(index)}>
+                                                {toggleChildRep[index] == false ? "Reply" : "Close"}
+                                            </span>
+                                        </Comment.Action> 
                                         <Comment.Action><span onClick={() => this.setState({ 
                                                                                             popUpRatingAnswer: true,
                                                                                             currentIndexAnswer: index
@@ -398,12 +404,13 @@ class QuestionShow extends Component {
                                                             rating={((this.state.submitRateAnswer&&(this.state.currentIndexAnswer==index))? this.state.totalRatingAnswer: this.props.ratingAnswerList[index])/1}
                                                             maxRating={5} disabled /></Comment.Action>
                                         {item.fileNames.map((fileName, index1) => 
-                                            <Label as='a' href={"https://ipfs.io/ipfs/"+item.fileHashes[index1]}>
+                                            <Label as='a' href={"https://ipfs.io/ipfs/"+item.fileHashes[index1]} target="_blank">
                                                 <Icon name='download' />
                                                 {fileName}
                                             </Label>
                                         )}    
                                     </Comment.Actions>
+                                    
                                 </Comment.Content>
                             </Comment>
                         <br /> 
@@ -473,7 +480,7 @@ class QuestionShow extends Component {
                             <Comment>
                                 <Comment.Avatar src={this.props.avatarListIcon[index]} style={{backgroundColor: 'crimson'}} />
                                 <Comment.Content>
-                                    { <Comment.Author as='a'>{this.props.avatarListName[index]}</Comment.Author> }
+                                    <b>{this.props.avatarListName[index]}</b>
                                     <Comment.Metadata>
                                         <div>
                                             {moment.unix(item.answerTime).format('dddd, Do MMMM YYYY, h:mm:ss a')}

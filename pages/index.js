@@ -338,7 +338,9 @@ class QuestionIndex extends Component {
                 </Table.Cell>
                 <Table.Cell textAlign='left'>
                     <Grid.Row textAlign='left'>
-                        <span style={{ fontSize: 18, color: '#6A737C', cursor: 'pointer' }} onClick={() => Router.pushRoute(`/questions/${address}`)}><a>{this.state.titles[i]}</a></span>
+                        {/* <span style={{ fontSize: 18, color: '#6A737C', cursor: 'pointer'}} onClick={() => Router.pushRoute(`/questions/${address}`)}><a>{this.state.titles[i]}</a></span> */}
+                        <span style={{ fontSize: 18, color: '#6A737C', cursor: 'pointer'}} onClick={() => window.open(`/questions/${address}`, "_blank")}><a>{this.state.titles[i]}</a></span>
+                        
                     </Grid.Row>
                     {isOverDue ?
                         ((canShareToken) ? ((numAnswer4) ?

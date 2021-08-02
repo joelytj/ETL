@@ -4,7 +4,7 @@ const routes = require('next-routes')();
 
 routes
      .add('/profile/:address', '/profile')
-     .add('/questions/lend', '/questions/postQuestion')
+     .add('/questions/post', '/questions/postQuestion')
      .add('/questions/:address', '/questions/show')
      .add('/:value','/index')
 
