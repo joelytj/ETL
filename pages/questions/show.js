@@ -368,8 +368,8 @@ class QuestionShow extends Component {
         );
     }
 
-    showChildAnswers = (parent, elmFiles) => {
-        const {answerList, replyText_arr, toggleChildRep} = this.state;
+    showChildAnswers = (parent) => {
+        const {answerList, replyText_arr} = this.state;
 
         let elmChildren = null;
         if (answerList !== null) {
@@ -390,12 +390,7 @@ class QuestionShow extends Component {
                                         {replyText_arr[index]}
                                     </Comment.Text>
                                     <Comment.Actions>
-                                        <Comment.Action>
-                                            {/* Reply */}
-                                            <span onClick={() => this.handleToggleChildRep(index)}>
-                                                {toggleChildRep[index] == false ? "Reply" : "Close"}
-                                            </span>
-                                        </Comment.Action> 
+                                    
                                         <Comment.Action><span onClick={() => this.setState({ 
                                                                                             popUpRatingAnswer: true,
                                                                                             currentIndexAnswer: index
@@ -410,9 +405,7 @@ class QuestionShow extends Component {
                                             </Label>
                                         )}    
                                     </Comment.Actions>
-                                    <br /> 
-                                    {/* {this.showChildAnswers(item.id)} */}
-                                    {toggleChildRep[index] == true && this.replyBox(elmFiles, item.id)}
+                                
                                 </Comment.Content>
                             </Comment>
                         <br /> 
