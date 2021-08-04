@@ -3,6 +3,8 @@ import { Menu, Segment, Container, Icon, Header, Grid, Input, Button, Sticky, Ra
 import { Link, Router } from '../routes';
 
 class HeaderMobile extends Component {
+
+
     state = {};
 
     render() {
@@ -28,7 +30,7 @@ class HeaderMobile extends Component {
                         style={{backgroundColor: '#1F5846'}}
                     >
                         <Menu.Item header>
-                            <h3>Ethereum Rent</h3>
+                            <h3>Home</h3>
                         </Menu.Item>
 
                         <Link route="/">
@@ -38,24 +40,10 @@ class HeaderMobile extends Component {
                             </a>
                         </Link>
 
-                        <Link route="/rents/lend">
+                        <Link route="/questions/post">
                             <a className = "item">
-                                <Icon name='plus circle'/>
-                                Lend An Item
-                            </a>
-                        </Link>
-
-                        <Link route="/rents/manage">
-                            <a className = "item">
-                                <Icon name='edit'/>
-                                Manage Items
-                            </a>
-                        </Link>
-                        
-                        <Link route="/rents/scancode">
-                            <a className = "item">
-                                <Icon name='qrcode'/>
-                                Scan QR Code
+                                <Icon name='post'/>
+                                Post a question
                             </a>
                         </Link>
 
@@ -65,6 +53,7 @@ class HeaderMobile extends Component {
                                 Profile
                             </a>
                         </Link>
+
                     </Sidebar>
 
                     <Sidebar.Pusher dimmed={sidebarOpened} style={{minHeight: '100vh'}}>
@@ -84,12 +73,12 @@ class HeaderMobile extends Component {
 
                                             <Menu.Item header style={{padding: 0}}>
                                                 <Icon name='ethereum' style={{float: 'left'}}/>
-                                                Ethereum Rent
+                                                Home
                                             </Menu.Item>
 
                                             <Menu.Item position='right'>
-                                                <Button as='a' inverted onClick={() => Router.pushRoute(`/rents/scancode`)}>
-                                                    Scan QR Code
+                                                <Button as='a' inverted onClick={() => Router.pushRoute(`/questions/post`)}>
+                                                    Post a question
                                                 </Button>
                                             </Menu.Item>
                                         </Container>
@@ -99,14 +88,20 @@ class HeaderMobile extends Component {
                                             <Grid.Row>
                                                 <Menu secondary inverted fluid>
                                                     <Menu.Item>
-                                                        <Input icon={<Icon name='search' inverted circular link />} placeholder='Search Items...' size='mini' /> 
+                                                    <Input icon={<Icon name='search' inverted circular link  onClick={() =>
+                                                {
+                                                    //console.log('value ',this.state.value);
+                                                    if (this.state.value!='') Router.pushRoute(`/${'search+'+encodeURIComponent(this.state.value)}`);
+                                                    if (this.state.value=="") Router.pushRoute(`/`);
+                                                    }}/>}
+                                                    />
                                                     </Menu.Item>
 
-                                                    <Menu.Item position='right' fitted>
+                                                    {/* <Menu.Item position='right' fitted>
                                                         <Button color='grey' size='mini' onClick={() => Router.pushRoute(`/disputes`)}>
                                                             <Icon name='warning circle'/>Disputes
                                                         </Button>
-                                                    </Menu.Item>
+                                                    </Menu.Item> */}
                                                 </Menu>
                                             </Grid.Row>
                                         </Grid>
