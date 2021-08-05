@@ -76,6 +76,20 @@
 						"type": "address"
 					}
 				],
+				"name": "returnDepositAt",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_question",
+						"type": "address"
+					}
+				],
 				"name": "shareTokenAt",
 				"outputs": [],
 				"payable": true,
@@ -259,9 +273,9 @@
 			]
 		},
 		"contracts/Question.sol": {
-			"keccak256": "0x077dbe20d266f553bbcbaea98ea611deaf2021db04e952d88e02ca2ba51c76cc",
+			"keccak256": "0xcd925401a829371f7d1dca504ffd30c02123022efd64983a1d721fdf8a0368cc",
 			"urls": [
-				"bzzr://e52934a94040648a971b255c96d8bf0c8d18731053e664f889719e28e4db8252"
+				"bzzr://0504bb97f57479b426713e87061b1772228911134ea5a24bf52e197bfa1b6b55"
 			]
 		}
 	},

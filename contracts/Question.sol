@@ -117,6 +117,7 @@ contract QuestionFactory {
         question.shareToken();
     }
 
+
     function returnDepositAt(address _question) public payable {
         if (users[msg.sender] == 0) {
             address profile = new Profile(msg.sender);
@@ -190,6 +191,7 @@ contract Question {
     mapping(address => address[]) public questionDepositers;
     uint256 public initialDeposit;
     ETLToken tokenContract = ETLToken(0xbe8eC8351CFd6640db115b58D322014cf54743D3);
+    bool public isOwner;
 
 
     //fallback function
@@ -239,6 +241,16 @@ contract Question {
 
     function getOwner() public view returns (address){
         return owner;
+    }
+
+    function userIsOwner(address _question) public returns(bool) {
+        if (msg.sender == owner) {
+            isOwner = true;
+            return true;
+        } else {
+            isOwner = false;
+            return false;
+        }
     }
 
     function getOwnerP() public view returns (Profile){
