@@ -76,6 +76,20 @@
 						"type": "address"
 					}
 				],
+				"name": "returnDepositAt",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_question",
+						"type": "address"
+					}
+				],
 				"name": "shareTokenAt",
 				"outputs": [],
 				"payable": true,
@@ -253,15 +267,15 @@
 	},
 	"sources": {
 		"contracts/ETLToken.sol": {
-			"keccak256": "0xcbd8a725c1ae878e2c9d519d6a80ee983f4992578437e38042eb078cdbdd87ea",
+			"keccak256": "0x1dfd0a08d98cb876519fbf7fcd9cb83733db9946e38465f4bc12333d2e58899e",
 			"urls": [
-				"bzzr://36712946c889e674ae56304dcef311f2eb16753574804c295bd6333071af71f7"
+				"bzzr://ec133a2d57134bfea3656a4ac00cd7689e7e0f85944ba3803021d8d4caefcc27"
 			]
 		},
 		"contracts/Question.sol": {
-			"keccak256": "0x077dbe20d266f553bbcbaea98ea611deaf2021db04e952d88e02ca2ba51c76cc",
+			"keccak256": "0x2fd1d32894dbd87f29f1e5cfa4faf2f99eb72a2b6b6d75acfad174454948bf83",
 			"urls": [
-				"bzzr://e52934a94040648a971b255c96d8bf0c8d18731053e664f889719e28e4db8252"
+				"bzzr://5cb44e713da674a17e20817d5c8e571510c35b62657e95fc0bc55a24ea21b6c5"
 			]
 		}
 	},

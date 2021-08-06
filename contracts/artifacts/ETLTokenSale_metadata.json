@@ -1,0 +1,146 @@
+{
+	"compiler": {
+		"version": "0.4.26+commit.4563c3fc"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_numberOfTokens",
+						"type": "uint256"
+					}
+				],
+				"name": "buyTokens",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "endSale",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "tokensSold",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "tokenContract",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "tokenPrice",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"name": "_tokenContract",
+						"type": "address"
+					},
+					{
+						"name": "_tokenPrice",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"name": "_buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Sell",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/ETLTokenSale.sol": "ETLTokenSale"
+		},
+		"evmVersion": "byzantium",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/ETLToken.sol": {
+			"keccak256": "0x8c8a18eee069ca1a9c5310424950d8156a2fd8dd27091c8de9238118eb7be1e5",
+			"urls": [
+				"bzzr://0a40be0313d2d9315f4aa7042de5a253ae51b3c25d36fd21b466f0180e87aec3"
+			]
+		},
+		"contracts/ETLTokenSale.sol": {
+			"keccak256": "0x4dc301e9e9963451dc9e1d0528c71bfa21aad2f69711ae99b4798c72ab3667c1",
+			"urls": [
+				"bzzr://330befc0d2294d9582ee9bb0fcba7f91d56ab6826681ead2c80ea2e104a48d91"
+			]
+		},
+		"contracts/Question.sol": {
+			"keccak256": "0x2fd1d32894dbd87f29f1e5cfa4faf2f99eb72a2b6b6d75acfad174454948bf83",
+			"urls": [
+				"bzzr://5cb44e713da674a17e20817d5c8e571510c35b62657e95fc0bc55a24ea21b6c5"
+			]
+		}
+	},
+	"version": 1
+}

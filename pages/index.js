@@ -146,6 +146,8 @@ class QuestionIndex extends Component {
     }
 
     renderData = async (category) => {
+        const accounts = await web3.eth.getAccounts();
+
         const { deployedCat1, deployedCat2, deployedCat3, deployedCat4, deployedCat5 } = this.props;
 
         console.log("deployedCat1: ", deployedCat1);
@@ -184,7 +186,8 @@ class QuestionIndex extends Component {
 
         let titles = [];
         let deposit = [];
-
+        let owners = [];
+        let address = null;
 
         const summary = await Promise.all(
             availableQuestions
@@ -196,6 +199,7 @@ class QuestionIndex extends Component {
         summary.forEach(function (item) {
             titles.push(item[0]);
             deposit.push(item[2]);
+            owners.push(item[4]);
         });
 
 
@@ -248,13 +252,15 @@ class QuestionIndex extends Component {
             availableQuestions: availableQuestions,
             titles: titles,
             deposit: deposit,
+            owners: owners,
             timeEnd: timeEnd,
             answererList: answererList,
             questionRating: questionRating,
             isOverDue: isOverDue,
             shareToken: shareToken,
             returnDeposit: returnDeposit,
-            numAnswer4: numAnswer4
+            numAnswer4: numAnswer4,
+            address:accounts[0]
         });
     }
 
@@ -300,10 +306,11 @@ class QuestionIndex extends Component {
         console.log("End handleCategoryClick");
     }
 
-    renderRentsDesktop() {
+    renderQuestionsDesktop() {
         const { activeCategory } = this.state;
-
         const items = this.state.availableQuestions.map((address, i) => {
+            const owner = this.state.owners[i];
+            const isOwner = (owner == this.state.address);
             const deposit = this.state.deposit[i]; //ethers.utils.formatUnits(this.state.deposit[i], "ether")*1000000000000000000;
             const rating = this.state.questionRating[i];
             const answers = this.state.answererList[i];
@@ -342,8 +349,8 @@ class QuestionIndex extends Component {
                         <span style={{ fontSize: 18, color: '#6A737C', cursor: 'pointer'}} onClick={() => window.open(`/questions/${address}`, "_blank")}><a>{this.state.titles[i]}</a></span>
                         
                     </Grid.Row>
-                    {isOverDue ?
-                        ((canShareToken) ? ((numAnswer4) ?
+                    {isOverDue ? 
+                        ((canShareToken) ? ((numAnswer4) ? isOwner ?
                             <Grid.Row textAlign='right'>
                                 <Button positive onClick={(e) => this.shareToken(e, address, i)} loading={this.state.loadingShareToken && (this.state.currentIndex == i)} disabled={this.state.disabledShareToken}>
                                     Share Tokens!
@@ -351,13 +358,13 @@ class QuestionIndex extends Component {
                                 <Message color='red' compact size='mini'
                                     header={'End time: ' + timeEnd}
                                 />
-                            </Grid.Row> : ((canReturnDeposit) ? <Grid.Row textAlign='right'><Button positive onClick={(e) => this.returnDeposit(e, address, i)} loading={this.state.loadingReturnDeposit && (this.state.currentIndexDep == i)} disabled={this.state.disabledReturnDeposit}>
+                            </Grid.Row>:<Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row> : ((canReturnDeposit) ? isOwner ?<Grid.Row textAlign='right'><Button positive onClick={(e) => this.returnDeposit(e, address, i)} loading={this.state.loadingReturnDeposit && (this.state.currentIndexDep == i)} disabled={this.state.disabledReturnDeposit}>
                                     Return Deposit!
                                 </Button> 
                                 <Message color='red' compact size='mini'
                                     header={'End time: '+timeEnd}
                                 />
-                        </Grid.Row> : <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row>)) : <Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row>) :
+                        </Grid.Row>: <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row> : <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row>)) : <Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row>) :
                         <Grid.Row textAlign='right'>
                             <Message color='yellow' compact size='mini'
                                 header={'End time: ' + timeEnd}
@@ -405,7 +412,7 @@ class QuestionIndex extends Component {
                 <h2>Questions</h2>
                 <Divider hidden />
 
-                {this.renderRentsDesktop()}
+                {this.renderQuestionsDesktop()}
 
                 <Divider hidden />
                 <div style={{ marginTop: 20 }}>Found {itemsLength} Item(s).</div>
