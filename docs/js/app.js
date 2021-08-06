@@ -104,7 +104,7 @@ App = {
         $('.token-price').html(web3.fromWei(App.tokenPrice, "ether").toNumber());
         return ETLTokenSaleInstance.tokensSold();
       }).then(function(tokensSold) {
-        App.tokensSold = tokensSold.toNumber();
+        App.tokensSold = tokensSold.toNumber()/10**2;
         $('.tokens-sold').html(App.tokensSold);
         $('.tokens-available').html(App.tokensAvailable);
   
@@ -116,7 +116,7 @@ App = {
           ETLTokenInstance = instance;
           return ETLTokenInstance.balanceOf(App.account);
         }).then(function(balance) {
-          $('.etl-balance').html(balance.toNumber());
+          $('.etl-balance').html(balance.toNumber()/10**2);
           App.loading = false;
           loader.hide();
           content.show();
@@ -127,7 +127,7 @@ App = {
     buyTokens: function() {
       $('#content').hide();
       $('#loader').show();
-      var numberOfTokens = $('#numberOfTokens').val();
+      var numberOfTokens = $('#numberOfTokens').val()*10**2;
       App.contracts.ETLTokenSale.deployed().then(function(instance) {
         return instance.buyTokens(numberOfTokens, {
           from: App.account,

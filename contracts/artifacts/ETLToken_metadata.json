@@ -63,6 +63,20 @@
 			{
 				"constant": true,
 				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
 				"name": "standard",
 				"outputs": [
 					{
@@ -91,20 +105,6 @@
 				],
 				"payable": false,
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "getMsgSender",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -171,7 +171,7 @@
 				"constant": false,
 				"inputs": [
 					{
-						"name": "_owner",
+						"name": "_user",
 						"type": "address"
 					},
 					{
@@ -271,15 +271,15 @@
 	},
 	"sources": {
 		"contracts/ETLToken.sol": {
-			"keccak256": "0xd403d1601d9868a7045288cc093b94d67eb7fe771626e4c7569e4fc53eb50521",
+			"keccak256": "0x2f6fa1d7f3a18ab839ac00d1ce51213d8d5acecc154a7fb6e16a5b3dc2dec2d3",
 			"urls": [
-				"bzzr://f66f49649efdacda622467cf6d663d4547d6f0c5c2b08b9b2a5ae1772b7dbaf1"
+				"bzzr://ed3b19492a851960757dfe11b19d601155609c07734d5d26404a2859a49ba19a"
 			]
 		},
 		"contracts/Question.sol": {
-			"keccak256": "0x72922b060c2359531cb9dbde86bff02684b37fe965869ba1ae771e2b06cbb828",
+			"keccak256": "0x2fd1d32894dbd87f29f1e5cfa4faf2f99eb72a2b6b6d75acfad174454948bf83",
 			"urls": [
-				"bzzr://84f97de582f140bb1f583bafcaacb602055ba14704ab77e422b10e94a9afc400"
+				"bzzr://5cb44e713da674a17e20817d5c8e571510c35b62657e95fc0bc55a24ea21b6c5"
 			]
 		}
 	},

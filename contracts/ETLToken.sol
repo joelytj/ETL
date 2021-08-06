@@ -6,6 +6,7 @@ contract ETLToken {
     string  public symbol = "ETL";
     string  public standard = "ETL Token v1.0";
     uint256 public totalSupply;
+    uint256 public decimals = 2;
 
     event Transfer(
         address indexed _from,
@@ -32,7 +33,6 @@ contract ETLToken {
 
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
-
         emit Transfer(msg.sender, _to, _value);
 
         return true;
