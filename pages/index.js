@@ -353,8 +353,8 @@ class QuestionIndex extends Component {
                         <span style={{ fontSize: 18, color: '#6A737C', cursor: 'pointer'}} onClick={() => window.open(`/questions/${address}`, "_blank")}><a>{this.state.titles[i]}</a></span>
                         
                     </Grid.Row>
-                    {isOverDue ?
-                        ((canShareToken) ? ((numAnswer4 && isOwner) ?
+                    {isOverDue && isOwner ?
+                        ((canShareToken) ? ((numAnswer4) ?
                             <Grid.Row textAlign='right'>
                                 <Button positive onClick={(e) => this.shareToken(e, address, i)} loading={this.state.loadingShareToken && (this.state.currentIndex == i)} disabled={this.state.disabledShareToken}>
                                     Share Tokens!
