@@ -197,6 +197,34 @@
 				"type": "function"
 			},
 			{
+				"constant": true,
+				"inputs": [],
+				"name": "alreadyReturnDeposit",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "getCheckReturnDeposit",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"constant": false,
 				"inputs": [
 					{
@@ -298,25 +326,6 @@
 				"constant": true,
 				"inputs": [],
 				"name": "proportion",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "initialDeposit",
 				"outputs": [
 					{
 						"name": "",
@@ -450,6 +459,15 @@
 				"type": "function"
 			},
 			{
+				"constant": false,
+				"inputs": [],
+				"name": "returnDeposit",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"constant": true,
 				"inputs": [],
 				"name": "getCategory",
@@ -508,6 +526,20 @@
 			{
 				"constant": true,
 				"inputs": [],
+				"name": "isOwner",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
 				"name": "ownerP",
 				"outputs": [
 					{
@@ -532,20 +564,6 @@
 					}
 				],
 				"name": "updateAnswerRate",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [
-					{
-						"name": "_initialDeposit",
-						"type": "uint256"
-					}
-				],
-				"name": "setInitialDeposit",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -583,25 +601,6 @@
 					{
 						"name": "",
 						"type": "string"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "_question",
-						"type": "address"
-					}
-				],
-				"name": "getInitialDeposit",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
 					}
 				],
 				"payable": false,
@@ -795,6 +794,39 @@
 				"type": "function"
 			},
 			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_question",
+						"type": "address"
+					}
+				],
+				"name": "userIsOwner",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "initialDeposit",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"constant": true,
 				"inputs": [
 					{
@@ -829,25 +861,6 @@
 			},
 			{
 				"constant": true,
-				"inputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "questionOwner",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
 				"inputs": [],
 				"name": "category",
 				"outputs": [
@@ -872,39 +885,6 @@
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [
-					{
-						"name": "_owner",
-						"type": "address"
-					}
-				],
-				"name": "setQuestionOwner",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "_question",
-						"type": "address"
-					}
-				],
-				"name": "getOwner",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -983,9 +963,9 @@
 			]
 		},
 		"contracts/Question.sol": {
-			"keccak256": "0x077dbe20d266f553bbcbaea98ea611deaf2021db04e952d88e02ca2ba51c76cc",
+			"keccak256": "0xcd925401a829371f7d1dca504ffd30c02123022efd64983a1d721fdf8a0368cc",
 			"urls": [
-				"bzzr://e52934a94040648a971b255c96d8bf0c8d18731053e664f889719e28e4db8252"
+				"bzzr://0504bb97f57479b426713e87061b1772228911134ea5a24bf52e197bfa1b6b55"
 			]
 		}
 	},

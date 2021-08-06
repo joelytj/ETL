@@ -202,7 +202,7 @@ class QuestionNew extends Component {
                 </Label>
             );
         }
-
+        
         const tagOptions = [
             {
                 key: `${categories[0]}`,

@@ -64,27 +64,31 @@ class QuestionIndex extends Component {
         await Promise.all(
             deployedQuestions.map(async (item) => {
                 const itemCat = await Question(item).methods.getCategory().call();
-                console.log(itemCat);
                 switch (itemCat) {
                     case categories[0]: {
                         deployedCat1.push(item);
-                        break;
+                        break; 
+                        
                     }
                     case categories[1]: {
                         deployedCat2.push(item);
                         break;
+                    
                     }
                     case categories[2]: {
                         deployedCat3.push(item);
                         break;
+                       
                     }
                     case categories[3]: {
                         deployedCat4.push(item);
                         break;
+                        
                     }
                     case categories[4]: {
                         deployedCat5.push(item);
                         break;
+                        
                     }
                 }
                 console.log("deployedCat1: ", deployedCat1);
@@ -160,22 +164,27 @@ class QuestionIndex extends Component {
             case categories[0]: {
                 availableQuestions = deployedCat1;
                 break;
+                
             }
             case categories[1]: {
                 availableQuestions = deployedCat2;
                 break;
+                
             }
             case categories[2]: {
                 availableQuestions = deployedCat3;
                 break;
+                
             }
             case categories[3]: {
                 availableQuestions = deployedCat4;
                 break;
+                
             }
             case categories[4]: {
                 availableQuestions = deployedCat5;
                 break;
+                
             }
         }
         console.log("availableQuestions: ", availableQuestions);
@@ -300,10 +309,12 @@ class QuestionIndex extends Component {
         console.log("End handleCategoryClick");
     }
 
-    renderRentsDesktop() {
+    renderQuestionsDesktop() {
         const { activeCategory } = this.state;
 
         const items = this.state.availableQuestions.map((address, i) => {
+            const question = Question(address);
+            const isOwner = question.methods.userIsOwner(address).call();
             const deposit = this.state.deposit[i]; //ethers.utils.formatUnits(this.state.deposit[i], "ether")*1000000000000000000;
             const rating = this.state.questionRating[i];
             const answers = this.state.answererList[i];
@@ -342,7 +353,7 @@ class QuestionIndex extends Component {
                         <span style={{ fontSize: 18, color: '#6A737C', cursor: 'pointer'}} onClick={() => window.open(`/questions/${address}`, "_blank")}><a>{this.state.titles[i]}</a></span>
                         
                     </Grid.Row>
-                    {isOverDue ?
+                    {isOverDue && isOwner ?
                         ((canShareToken) ? ((numAnswer4) ?
                             <Grid.Row textAlign='right'>
                                 <Button positive onClick={(e) => this.shareToken(e, address, i)} loading={this.state.loadingShareToken && (this.state.currentIndex == i)} disabled={this.state.disabledShareToken}>
@@ -405,7 +416,7 @@ class QuestionIndex extends Component {
                 <h2>Questions</h2>
                 <Divider hidden />
 
-                {this.renderRentsDesktop()}
+                {this.renderQuestionsDesktop()}
 
                 <Divider hidden />
                 <div style={{ marginTop: 20 }}>Found {itemsLength} Item(s).</div>
