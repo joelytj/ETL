@@ -103,7 +103,7 @@ class QuestionShow extends Component {
             address: props.query.address,
             questionTitle: summary[0],
             description: summary[1],//await getString('Qm'+summary[1]),
-            initialDeposit: summary[2], //ethers.utils.formatUnits(summary[2], "ether"),
+            initialDeposit: summary[2]/10**2, //ethers.utils.formatUnits(summary[2], "ether"),
             //maxDuration: summary[3],
             category: category,
             owner: summary[4],
@@ -259,7 +259,7 @@ class QuestionShow extends Component {
         } = this.props;
 
         const showRating = (this.state.submitRate ? this.state.totalRating : this.props.initialTotalRating)/1;
-        const showDeposit = (this.state.submitRate ? this.state.totalDeposit: this.props.initialDeposit); //*1000000000000000000;
+        const showDeposit = (this.state.submitRate ? this.state.totalDeposit /10**2: this.props.initialDeposit); //*1000000000000000000;
 
         var currentTime = (new Date).getTime();
         let remainingTime = publishTimeMs + maxDurationMs - currentTime;
@@ -326,7 +326,9 @@ class QuestionShow extends Component {
                             </Table.Cell>
                         </Table.Row>
                         <Table.Row>
-                            <Table.Cell><span onClick={() => this.setState({ popUpRatingQuestion: true })} style={{cursor: 'pointer', color: 'blue'}}>Vote</span></Table.Cell>
+                            <Table.Cell>
+                                {(remainingTime > 0) ? <span onClick={() => this.setState({ popUpRatingQuestion: true })} style={{cursor: 'pointer', color: 'blue'}}>Vote</span> : <span>Vote</span> }
+                            </Table.Cell>
                             <Table.Cell><Rating icon='star' size='huge' rating={showRating} maxRating={5} disabled /></Table.Cell>
                         </Table.Row>
                     </Table.Body>

@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 import "./ETLToken.sol";
 
 contract contractB {
-    ETLToken tokenContract = ETLToken(0x7E14A1AD36595cf73D0eE8d24d936e24A7eDbb85); //0xbe8eC8351CFd6640db115b58D322014cf54743D3
+    ETLToken tokenContract = ETLToken(0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0); 
     mapping ( address => uint256 ) public balances;
 
     function deposit(address _user, uint tokens) public {
@@ -32,7 +32,7 @@ contract QuestionFactory {
     mapping(address => address) public owner;
     address public contractbinstance;
 
-    ETLToken tokenContract = ETLToken(0x7E14A1AD36595cf73D0eE8d24d936e24A7eDbb85);
+    ETLToken tokenContract = ETLToken(0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0);
 
     function createQuestion(string category, string questionTitle, string description, uint deposit, 
                     uint maxDuration, string[] fileHashesQuestion, string[] fileNamesQuestion) public {
@@ -42,7 +42,7 @@ contract QuestionFactory {
         }
 
         require(deposit>0, "Deposit cannot be 0");
-        require((deposit/10**2)<=Profile(users[msg.sender]).getToken(msg.sender), "Insufficient tokens");
+        require((deposit/10**4)<=Profile(users[msg.sender]).getToken(msg.sender), "Insufficient tokens");
         address newQuestion = new Question(category, questionTitle, description, deposit, maxDuration,
                                     fileHashesQuestion, fileNamesQuestion, msg.sender, users[msg.sender]);
         deployedQuestions.push(newQuestion);
@@ -50,8 +50,8 @@ contract QuestionFactory {
         Question question = Question(newQuestion);
         //transfer deposit from user to contractB instance
         contractbinstance = question.getContractBInstance();
-        tokenContract.approve(msg.sender, contractbinstance, deposit*10**2); 
-        contractB(contractbinstance).deposit(msg.sender, deposit*10**2);
+        tokenContract.approve(msg.sender, contractbinstance, deposit); 
+        contractB(contractbinstance).deposit(msg.sender, deposit);
 
         Profile(users[msg.sender]).increaseNumOfQues();
         question.postQuestion();  //Save posted time here
@@ -85,8 +85,8 @@ contract QuestionFactory {
         contractB(contractbinstance).deposit(msg.sender, 1*10**2);
         
         question.ratingQuestion(_ratingQuestion); 
-        question.updateDeposite(1);
-        Profile(users[msg.sender]).updateToken(0, 1);
+        question.updateDeposite(1*10**2);
+        Profile(users[msg.sender]).updateToken(0, 1*10**2);
         Profile(question.getOwnerP()).increaseSumOfQuesRate(_ratingQuestion);
         
         //store who deposited tokens
@@ -188,8 +188,8 @@ contract Question {
     //map each question to its own contractB instance
     mapping(address => address) public questionContractB;
     mapping(address => address[]) public questionDepositers;
-    uint256 public initialDeposit;
-    ETLToken tokenContract = ETLToken(0x7E14A1AD36595cf73D0eE8d24d936e24A7eDbb85);
+    uint public initialDeposit;
+    ETLToken tokenContract = ETLToken(0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0);
 
 
     //fallback function
@@ -323,9 +323,9 @@ contract Question {
                 contractB(questionContractB[this]).share(questionDepositers[this][i], 1*10**2);
             }
             //transfer initial deposit back to owner of question
-            initialDeposit = deposit - questionDepositers[this].length;
-            tokenContract.approve(questionContractB[this], owner, initialDeposit*10**2); 
-            contractB(questionContractB[this]).share(owner, initialDeposit*10**2);
+            initialDeposit = deposit - (questionDepositers[this].length * 10**2);
+            tokenContract.approve(questionContractB[this], owner, initialDeposit); 
+            contractB(questionContractB[this]).share(owner, initialDeposit);
         
         }
 
@@ -339,7 +339,7 @@ contract Question {
             }
         }
         
-        proportion = (deposit * 10**2) / numPeople; //1/6 * 100 = 16 (not 16...)
+        proportion = (deposit) / numPeople; //if uint solidity rounds down eg 1/6 * 100 = 16 (not 16.23.)
         for (i = 0; i < answerList.length;i++) {
             if(answerList[i].answerRate >= 4){ //Only take 4 stars above into account
                 tokenContract.approve(questionContractB[this], answerList[i].answerer, proportion); 
@@ -399,7 +399,7 @@ contract Question {
 }
 
 contract Profile {
-    ETLToken public tokenContract = ETLToken(0x7E14A1AD36595cf73D0eE8d24d936e24A7eDbb85);
+    ETLToken public tokenContract = ETLToken(0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0);
     uint public token;
     uint public numOfQues;
     uint public sumOfQuesRate;
@@ -469,7 +469,7 @@ contract Profile {
     }
 
     function getToken(address _user) public returns(uint){
-        token = tokenContract.balanceOf(_user) / 10**2;
+        token = tokenContract.balanceOf(_user); //removed /10**2 => => 5 token == 500
         
         return token;
 

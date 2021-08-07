@@ -70,7 +70,7 @@ class QuestionNew extends Component {
                     description,
                     //descHash.substring(2),
                     //web3.utils.toWei(deposit, 'ether'),
-                    Number(deposit),
+                    parseFloat(deposit) * 10**2,
                     parseFloat(maxDuration) * 60 * 60,
                     fileHashes_array,
                     fileNames_array)
@@ -83,6 +83,7 @@ class QuestionNew extends Component {
                 successMessage: "You have submitted the question successfully"
             });
         } catch (err) {
+            // throw Error("Deposit must be integer value");
             this.setState({ errorMessage: err.message });
             console.log(err.toString());
         }

@@ -198,7 +198,7 @@ class QuestionIndex extends Component {
 
         summary.forEach(function (item) {
             titles.push(item[0]);
-            deposit.push(item[2]);
+            deposit.push(item[2] / 10**2);
             owners.push(item[4]);
         });
 
