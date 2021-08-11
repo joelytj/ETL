@@ -1,5 +1,5 @@
 # EtherLearn
-An application that incentivises collaboration learning using Ethereum-based blockchain and tokens. You can find it at https://www.ether-learn.com </br>
+An application that incentivises collaboration learning using Ethereum-based blockchain and tokens. </br>
 Note: to use the application you will have to have Metamask installed on your Chrome/Firefox browser and also request some dummy Ether token from https://faucet.rinkeby.io
 
 System design of EtherLearn </br>
