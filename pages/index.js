@@ -83,8 +83,11 @@ class QuestionIndex extends Component {
                         break;
                     }
                     case categories[4]: {
-                        deployedCat5.push(item);
-                        break;
+                        if (item !== "0x25143A56Db87300622a1c6479b178069E32551BF") {
+                            deployedCat5.push(item);
+                            break;
+                        }
+                        
                     }
                 }
                 console.log("deployedCat1: ", deployedCat1);
