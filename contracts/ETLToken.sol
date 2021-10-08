@@ -1,4 +1,4 @@
-pragma solidity ^0.4.25;
+pragma solidity ^0.8.0;
 import './Question.sol';
 
 contract ETLToken {
@@ -60,9 +60,9 @@ contract ETLToken {
         return true;
     }
     
-    function balanceOf(address _account) public view returns (uint256) {
-        return balanceOf[_account];
-    }
+    // function balanceOf(address _account) public view returns (uint256) {
+    //     return balanceOf[_account];
+    // }
 
 
 }

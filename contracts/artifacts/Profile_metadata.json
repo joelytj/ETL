@@ -1,121 +1,77 @@
 {
 	"compiler": {
-		"version": "0.4.26+commit.4563c3fc"
+		"version": "0.8.0+commit.c7dfd78e"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"constant": false,
-				"inputs": [],
-				"name": "increaseNumOfAns",
-				"outputs": [],
-				"payable": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					}
+				],
 				"stateMutability": "nonpayable",
-				"type": "function"
+				"type": "constructor"
 			},
 			{
-				"constant": true,
 				"inputs": [],
 				"name": "avgAnsRate",
 				"outputs": [
 					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": true,
 				"inputs": [],
-				"name": "sumOfQuesRate",
+				"name": "avgQuesRate",
 				"outputs": [
 					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": false,
+				"inputs": [],
+				"name": "getNumOfAns",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "getNumOfQues",
 				"outputs": [
 					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "sumOfAnsRate",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "getavgQuesRate",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "user",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "tokenContract",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
 				"inputs": [
 					{
+						"internalType": "address",
 						"name": "_user",
 						"type": "address"
 					}
@@ -123,178 +79,210 @@
 				"name": "getToken",
 				"outputs": [
 					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "numOfQues",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "increaseNumOfQues",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": false,
 				"inputs": [],
 				"name": "getavgAnsRate",
 				"outputs": [
 					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"constant": false,
+				"inputs": [],
+				"name": "getavgQuesRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "increaseNumOfAns",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "increaseNumOfQues",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
+						"internalType": "uint256",
 						"name": "_rate",
 						"type": "uint256"
 					}
 				],
 				"name": "increaseSumOfAnsRate",
 				"outputs": [],
-				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"constant": false,
-				"inputs": [],
-				"name": "getNumOfAns",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": false,
 				"inputs": [
 					{
-						"name": "addOrSub",
-						"type": "uint256"
-					},
-					{
-						"name": "_token",
-						"type": "uint256"
-					}
-				],
-				"name": "updateToken",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [
-					{
+						"internalType": "uint256",
 						"name": "_rate",
 						"type": "uint256"
 					}
 				],
 				"name": "increaseSumOfQuesRate",
 				"outputs": [],
-				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "avgQuesRate",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "token",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
 				"inputs": [],
 				"name": "numOfAns",
 				"outputs": [
 					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numOfQues",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sumOfAnsRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sumOfQuesRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "token",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenContract",
+				"outputs": [
+					{
+						"internalType": "contract ETLToken",
+						"name": "",
+						"type": "address"
+					}
+				],
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"name": "_user",
+						"internalType": "uint256",
+						"name": "addOrSub",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_token",
+						"type": "uint256"
+					}
+				],
+				"name": "updateToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "user",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
 						"type": "address"
 					}
 				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "constructor"
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
-			"methods": {}
+			"kind": "dev",
+			"methods": {},
+			"version": 1
 		},
 		"userdoc": {
-			"methods": {}
+			"kind": "user",
+			"methods": {},
+			"version": 1
 		}
 	},
 	"settings": {
 		"compilationTarget": {
 			"contracts/Question.sol": "Profile"
 		},
-		"evmVersion": "byzantium",
+		"evmVersion": "istanbul",
 		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
 		"optimizer": {
 			"enabled": false,
 			"runs": 200
@@ -303,15 +291,17 @@
 	},
 	"sources": {
 		"contracts/ETLToken.sol": {
-			"keccak256": "0x1dfd0a08d98cb876519fbf7fcd9cb83733db9946e38465f4bc12333d2e58899e",
+			"keccak256": "0x2b638f165709db12a86f0bf64b4f91879b0b5c436b83edbff1ef7f9e0f63d576",
 			"urls": [
-				"bzzr://ec133a2d57134bfea3656a4ac00cd7689e7e0f85944ba3803021d8d4caefcc27"
+				"bzz-raw://57d42082e2b821b3f40d04ba890480506afcbaea630619b12a4b824d4cf3eb03",
+				"dweb:/ipfs/QmZvVMB3yEnJQDxHcDjUAAf74kAPAHkuKfNj6jqd6As8Qh"
 			]
 		},
 		"contracts/Question.sol": {
-			"keccak256": "0x2fd1d32894dbd87f29f1e5cfa4faf2f99eb72a2b6b6d75acfad174454948bf83",
+			"keccak256": "0x878cac3931b1d5fba8bed8d75ab859dc08b595998a66d93b5ecfbc348f83222c",
 			"urls": [
-				"bzzr://5cb44e713da674a17e20817d5c8e571510c35b62657e95fc0bc55a24ea21b6c5"
+				"bzz-raw://1330bd13ee58fc9ffa41e5fdc8a591f68870bbbb3ee045b3400e224f41e4fa7e",
+				"dweb:/ipfs/QmVUMTtGfhJDKcekEzp7dCtrjKhcUtt2LSrKDxpVFq8xX1"
 			]
 		}
 	},

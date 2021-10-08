@@ -1,4 +1,4 @@
-pragma solidity ^0.4.25;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 import "./ETLToken.sol";
 
@@ -34,18 +34,18 @@ contract QuestionFactory {
 
     ETLToken tokenContract = ETLToken(0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0);
 
-    function createQuestion(string category, string questionTitle, string description, uint deposit, 
-                    uint maxDuration, string[] fileHashesQuestion, string[] fileNamesQuestion) public {
-        if (users[msg.sender] == 0) {
-            address profile = new Profile(msg.sender);
-            users[msg.sender] = profile;
+    function createQuestion(string memory category, string memory questionTitle, string memory description, uint deposit, 
+                    uint maxDuration, string[] memory fileHashesQuestion, string[] memory fileNamesQuestion) public {
+        if (users[msg.sender] == address(0x0)) {
+            Profile profile = new Profile(msg.sender);
+            users[msg.sender] = address(profile);
         }
 
         require(deposit>0, "Deposit cannot be 0");
         require((deposit/10**4)<=Profile(users[msg.sender]).getToken(msg.sender), "Insufficient tokens");
-        address newQuestion = new Question(category, questionTitle, description, deposit, maxDuration,
+        Question newQuestion = new Question(category, questionTitle, description, deposit, maxDuration,
                                     fileHashesQuestion, fileNamesQuestion, msg.sender, users[msg.sender]);
-        deployedQuestions.push(newQuestion);
+        deployedQuestions.push(address(newQuestion));
         
         Question question = Question(newQuestion);
         //transfer deposit from user to contractB instance
@@ -59,10 +59,10 @@ contract QuestionFactory {
 
     }
 
-    function createAnswer(address _question, string _reply, string[] _fileHashes, string[] _fileNames, int _parent) public {
-        if (users[msg.sender] == 0) {
-            address profile = new Profile(msg.sender);
-            users[msg.sender] = profile;
+    function createAnswer(address _question, string memory _reply, string[] memory _fileHashes, string[] memory _fileNames, int _parent) public {
+        if (users[msg.sender] == address(0x0)) {
+            Profile profile = new Profile(msg.sender);
+            users[msg.sender] = address(profile);
         }   
         Question question = Question(_question);
         question.answer(_reply, _fileHashes, _fileNames, msg.sender, users[msg.sender], _parent);
@@ -70,9 +70,9 @@ contract QuestionFactory {
     }
 
     function ratingQuestionAt(address _question, uint _ratingQuestion) public payable{
-        if (users[msg.sender] == 0) {
-            address profile = new Profile(msg.sender);
-            users[msg.sender] = profile;
+        if (users[msg.sender] == address(0x0)) {
+            Profile profile = new Profile(msg.sender);
+            users[msg.sender] = address(profile);
         }
 
         Question question = Question(_question);
@@ -95,9 +95,9 @@ contract QuestionFactory {
     }
 
     function ratingAnswerAt(address _question, uint _ratingAnswer, uint _index) public payable {
-        if (users[msg.sender] == 0) {
-            address profile = new Profile(msg.sender);
-            users[msg.sender] = profile;
+        if (users[msg.sender] == address(0x0)) {
+            Profile profile = new Profile(msg.sender);
+            users[msg.sender] = address(profile);
         }
 
         Question question = Question(_question);
@@ -108,9 +108,9 @@ contract QuestionFactory {
 
 
     function shareTokenAt(address _question) public payable {
-        if (users[msg.sender] == 0) {
-            address profile = new Profile(msg.sender);
-            users[msg.sender] = profile;
+        if (users[msg.sender] == address(0x0)) {
+            Profile profile = new Profile(msg.sender);
+            users[msg.sender] = address(profile);
         }
 
         Question question = Question(_question);
@@ -118,9 +118,9 @@ contract QuestionFactory {
     }
 
     function returnDepositAt(address _question) public payable {
-        if (users[msg.sender] == 0) {
-            address profile = new Profile(msg.sender);
-            users[msg.sender] = profile;
+        if (users[msg.sender] == address(0x0)) {
+            Profile profile = new Profile(msg.sender);
+            users[msg.sender] = address(profile);
         }
 
         Question question = Question(_question);
@@ -128,7 +128,7 @@ contract QuestionFactory {
     }
 
     function hasProfile(address _user) public returns(bool) {
-        if (users[_user] == 0) {
+        if (users[_user] == address(0x0)) {
             return false;
         } else {
             return true;
@@ -136,11 +136,11 @@ contract QuestionFactory {
     }
 
     function getProfile(address _user) public returns(address) {
-        require(users[_user] != 0);
+        require(users[_user] != address(0x0));
         return users[_user];
     }
     
-    function getDeployedQuestions() public view returns(address[]) {
+    function getDeployedQuestions() public view returns(address[] memory) {
         return deployedQuestions;
     }
 
@@ -192,10 +192,7 @@ contract Question {
     ETLToken tokenContract = ETLToken(0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0);
 
 
-    //fallback function
-    function() payable { }
-    
-    function Question (string _category, string _questionTitle, string _description, uint _deposit, uint _maxDuration, string[] _fileHashesQuestion, string[] _fileNamesQuestion, address _owner, address _ownerP) public {
+    constructor (string memory _category, string memory _questionTitle, string memory _description, uint _deposit, uint _maxDuration, string[] memory _fileHashesQuestion, string[] memory _fileNamesQuestion, address _owner, address _ownerP) public {
         category = _category;
         questionTitle = _questionTitle;
         description = _description;
@@ -207,20 +204,20 @@ contract Question {
         ownerP = Profile(_ownerP);
         
         //create contractB instance each time a new Question is created
-        if (questionContractB[this] == 0) {
+        if (questionContractB[address(this)] == address(0x0)) {
             contractB contractb = new contractB();
-            contractbinstance = contractb;
-            questionContractB[this] = contractbinstance;
+            contractbinstance = address(contractb);
+            questionContractB[address(this)] = contractbinstance;
         }
          
     }
     
     function getContractBInstance() public returns (address) {
-        return questionContractB[this];
+        return questionContractB[address(this)];
     }
 
     function getSummary() public view returns (
-        string, string, uint, uint, address, string[], string[]
+        string memory, string memory, uint, uint, address, string[] memory, string[] memory
     ) {
         return(
             questionTitle,
@@ -233,7 +230,7 @@ contract Question {
         );
     }
 
-    function getCategory() public view returns (string) {
+    function getCategory() public view returns (string memory) {
         return category;
     }
 
@@ -252,7 +249,7 @@ contract Question {
     function getTime() public view returns (uint, uint, uint) {
         return(
             start,
-            now,
+            block.timestamp,
             maxDuration
         );
     }
@@ -275,30 +272,30 @@ contract Question {
         return deposit;
     }
     
-    function getQuestionDepositers(address _question) public view returns (address[]) {
+    function getQuestionDepositers(address _question) public view returns (address[] memory) {
         return questionDepositers[_question];
     }
     
     function setQuestionDepositers(address _questionDepositer) public {
-        questionDepositers[this].push(_questionDepositer);
+        questionDepositers[address(this)].push(_questionDepositer);
     }
 
     function isOverdue() public returns (bool) {
-        uint publishingTime = now - start;
+        uint publishingTime = block.timestamp - start;
 
         return publishingTime > maxDuration;
 
     }
 
-    function getCheckShareToken() returns(bool){
+    function getCheckShareToken() public returns(bool){
         return (!alreadyShareToken);
     }
 
-    function getCheckReturnDeposit() returns(bool) {
+    function getCheckReturnDeposit() public returns(bool) {
         return(!alreadyReturnDeposit);
     }
 
-    function getNumAnswer4() public view returns (bool){
+    function getNumAnswer4() public returns (bool){
         uint getNumAnswer4;
         for (uint i = 0;i < answerList.length;i++) {
             if(answerList[i].answerRate >= 4) 
@@ -315,17 +312,17 @@ contract Question {
     }
 
     function returnDeposit() public {
-        uint publishingTime = now - start;
+        uint publishingTime = block.timestamp - start;
 
         if (publishingTime > maxDuration) {
-            for (uint i=0; i<questionDepositers[this].length;i++) {
-                tokenContract.approve(questionContractB[this], questionDepositers[this][i], 1*10**2); 
-                contractB(questionContractB[this]).share(questionDepositers[this][i], 1*10**2);
+            for (uint i=0; i<questionDepositers[address(this)].length;i++) {
+                tokenContract.approve(questionContractB[address(this)], questionDepositers[address(this)][i], 1*10**2); 
+                contractB(questionContractB[address(this)]).share(questionDepositers[address(this)][i], 1*10**2);
             }
             //transfer initial deposit back to owner of question
-            initialDeposit = deposit - (questionDepositers[this].length * 10**2);
-            tokenContract.approve(questionContractB[this], owner, initialDeposit); 
-            contractB(questionContractB[this]).share(owner, initialDeposit);
+            initialDeposit = deposit - (questionDepositers[address(this)].length * 10**2);
+            tokenContract.approve(questionContractB[address(this)], owner, initialDeposit); 
+            contractB(questionContractB[address(this)]).share(owner, initialDeposit);
         
         }
 
@@ -340,10 +337,10 @@ contract Question {
         }
         
         proportion = (deposit) / numPeople; //if uint solidity rounds down eg 1/6 * 100 = 16 (not 16.23.)
-        for (i = 0; i < answerList.length;i++) {
+        for (uint i = 0; i < answerList.length;i++) {
             if(answerList[i].answerRate >= 4){ //Only take 4 stars above into account
-                tokenContract.approve(questionContractB[this], answerList[i].answerer, proportion); 
-                contractB(questionContractB[this]).share(answerList[i].answerer, proportion);
+                tokenContract.approve(questionContractB[address(this)], answerList[i].answerer, proportion); 
+                contractB(questionContractB[address(this)]).share(answerList[i].answerer, proportion);
 
             }
         }
@@ -352,10 +349,10 @@ contract Question {
     }
     
     function postQuestion() public {
-        start = now;   
+        start = block.timestamp;   
     }
 
-    function answer(string _reply, string[] _fileHashes, string[] _fileNames, address _answerer, address _answererP, int _parent) public {
+    function answer(string memory _reply, string[] memory _fileHashes, string[] memory _fileNames, address _answerer, address _answererP, int _parent) public {
         int _id;
         if (_parent == -1) {   //a parent answer
             _id = count;   
@@ -370,7 +367,7 @@ contract Question {
             fileNames: _fileNames,
             answerer: _answerer,
             answererP: Profile(_answererP),
-            answerTime: now,
+            answerTime: block.timestamp,
             answerRate: 0,
             answerNumRate: 0,
             answerSumRate: 0,
@@ -382,7 +379,7 @@ contract Question {
     } 
 
 
-    function getAnswerList() public view returns (Answer[]) {
+    function getAnswerList() public view returns (Answer[] memory) {
         return answerList;
     }
 
@@ -409,7 +406,7 @@ contract Profile {
     uint public avgAnsRate;
     address public user;
     
-    function Profile (address _user) public {
+    constructor (address _user) public {
         user = _user;
     }
 

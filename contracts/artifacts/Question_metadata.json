@@ -1,681 +1,129 @@
 {
 	"compiler": {
-		"version": "0.4.26+commit.4563c3fc"
+		"version": "0.8.0+commit.c7dfd78e"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"constant": false,
-				"inputs": [],
-				"name": "getCheckShareToken",
-				"outputs": [
-					{
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "count",
-				"outputs": [
-					{
-						"name": "",
-						"type": "int256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "postQuestion",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": false,
 				"inputs": [
 					{
-						"name": "_questionDepositer",
-						"type": "address"
-					}
-				],
-				"name": "setQuestionDepositers",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "getRatingQuestion",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "questionRate",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "getAnswerList",
-				"outputs": [
-					{
-						"components": [
-							{
-								"name": "replyHash",
-								"type": "string"
-							},
-							{
-								"name": "fileHashes",
-								"type": "string[]"
-							},
-							{
-								"name": "fileNames",
-								"type": "string[]"
-							},
-							{
-								"name": "answerer",
-								"type": "address"
-							},
-							{
-								"name": "answererP",
-								"type": "address"
-							},
-							{
-								"name": "answerTime",
-								"type": "uint256"
-							},
-							{
-								"name": "answerRate",
-								"type": "uint256"
-							},
-							{
-								"name": "answerNumRate",
-								"type": "uint256"
-							},
-							{
-								"name": "answerSumRate",
-								"type": "uint256"
-							},
-							{
-								"name": "parent",
-								"type": "int256"
-							},
-							{
-								"name": "id",
-								"type": "int256"
-							}
-						],
-						"name": "",
-						"type": "tuple[]"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "isOverdue",
-				"outputs": [
-					{
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "getSummary",
-				"outputs": [
-					{
-						"name": "",
+						"internalType": "string",
+						"name": "_category",
 						"type": "string"
 					},
 					{
-						"name": "",
+						"internalType": "string",
+						"name": "_questionTitle",
 						"type": "string"
 					},
 					{
-						"name": "",
+						"internalType": "string",
+						"name": "_description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_deposit",
 						"type": "uint256"
 					},
 					{
-						"name": "",
+						"internalType": "uint256",
+						"name": "_maxDuration",
 						"type": "uint256"
 					},
 					{
-						"name": "",
+						"internalType": "string[]",
+						"name": "_fileHashesQuestion",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "_fileNamesQuestion",
+						"type": "string[]"
+					},
+					{
+						"internalType": "address",
+						"name": "_owner",
 						"type": "address"
 					},
 					{
-						"name": "",
-						"type": "string[]"
-					},
-					{
-						"name": "",
-						"type": "string[]"
+						"internalType": "address",
+						"name": "_ownerP",
+						"type": "address"
 					}
 				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
+				"stateMutability": "nonpayable",
+				"type": "constructor"
 			},
 			{
-				"constant": true,
 				"inputs": [],
 				"name": "alreadyReturnDeposit",
 				"outputs": [
 					{
+						"internalType": "bool",
 						"name": "",
 						"type": "bool"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": false,
 				"inputs": [],
-				"name": "getCheckReturnDeposit",
+				"name": "alreadyShareToken",
 				"outputs": [
 					{
+						"internalType": "bool",
 						"name": "",
 						"type": "bool"
 					}
 				],
-				"payable": false,
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": false,
 				"inputs": [
 					{
+						"internalType": "string",
 						"name": "_reply",
 						"type": "string"
 					},
 					{
+						"internalType": "string[]",
 						"name": "_fileHashes",
 						"type": "string[]"
 					},
 					{
+						"internalType": "string[]",
 						"name": "_fileNames",
 						"type": "string[]"
 					},
 					{
+						"internalType": "address",
 						"name": "_answerer",
 						"type": "address"
 					},
 					{
+						"internalType": "address",
 						"name": "_answererP",
 						"type": "address"
 					},
 					{
+						"internalType": "int256",
 						"name": "_parent",
 						"type": "int256"
 					}
 				],
 				"name": "answer",
 				"outputs": [],
-				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "numRate",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "getTime",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					},
-					{
-						"name": "",
-						"type": "uint256"
-					},
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "contractbinstance",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "getNumAnswer4",
-				"outputs": [
-					{
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "proportion",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "questionTitle",
-				"outputs": [
-					{
-						"name": "",
-						"type": "string"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
 				"inputs": [
 					{
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "getAnswerRate",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "shareToken",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "maxDuration",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "fileNamesQuestion",
-				"outputs": [
-					{
-						"name": "",
-						"type": "string"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [
-					{
-						"name": "_value",
-						"type": "uint256"
-					}
-				],
-				"name": "updateDeposite",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "description",
-				"outputs": [
-					{
-						"name": "",
-						"type": "string"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "_index",
-						"type": "uint256"
-					}
-				],
-				"name": "getAnswererP",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "returnDeposit",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "getCategory",
-				"outputs": [
-					{
-						"name": "",
-						"type": "string"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "tokenSum",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "getOwner",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "isOwner",
-				"outputs": [
-					{
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "ownerP",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [
-					{
-						"name": "_value",
-						"type": "uint256"
-					},
-					{
-						"name": "index",
-						"type": "uint256"
-					}
-				],
-				"name": "updateAnswerRate",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "questionContractB",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "fileHashesQuestion",
-				"outputs": [
-					{
-						"name": "",
-						"type": "string"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "",
-						"type": "address"
-					},
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "questionDepositers",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [],
-				"name": "start",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "getContractBInstance",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [],
-				"name": "getDeposit",
-				"outputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
@@ -683,153 +131,373 @@
 				"name": "answerList",
 				"outputs": [
 					{
+						"internalType": "string",
 						"name": "replyHash",
 						"type": "string"
 					},
 					{
+						"internalType": "address",
 						"name": "answerer",
 						"type": "address"
 					},
 					{
+						"internalType": "contract Profile",
 						"name": "answererP",
 						"type": "address"
 					},
 					{
+						"internalType": "uint256",
 						"name": "answerTime",
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint256",
 						"name": "answerRate",
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint256",
 						"name": "answerNumRate",
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint256",
 						"name": "answerSumRate",
 						"type": "uint256"
 					},
 					{
+						"internalType": "int256",
 						"name": "parent",
 						"type": "int256"
 					},
 					{
+						"internalType": "int256",
 						"name": "id",
 						"type": "int256"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": true,
 				"inputs": [],
-				"name": "getOwnerP",
+				"name": "category",
 				"outputs": [
 					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "contractbinstance",
+				"outputs": [
+					{
+						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": true,
 				"inputs": [],
-				"name": "numPeople",
+				"name": "count",
 				"outputs": [
 					{
+						"internalType": "int256",
 						"name": "",
-						"type": "uint256"
+						"type": "int256"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [],
-				"name": "alreadyShareToken",
-				"outputs": [
-					{
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
 				"inputs": [],
 				"name": "deposit",
 				"outputs": [
 					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": true,
 				"inputs": [],
-				"name": "sumRate",
+				"name": "description",
 				"outputs": [
 					{
+						"internalType": "string",
 						"name": "",
-						"type": "uint256"
+						"type": "string"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": false,
 				"inputs": [
 					{
-						"name": "_question",
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "fileHashesQuestion",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "fileNamesQuestion",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAnswerList",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "replyHash",
+								"type": "string"
+							},
+							{
+								"internalType": "string[]",
+								"name": "fileHashes",
+								"type": "string[]"
+							},
+							{
+								"internalType": "string[]",
+								"name": "fileNames",
+								"type": "string[]"
+							},
+							{
+								"internalType": "address",
+								"name": "answerer",
+								"type": "address"
+							},
+							{
+								"internalType": "contract Profile",
+								"name": "answererP",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "answerTime",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "answerRate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "answerNumRate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "answerSumRate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "int256",
+								"name": "parent",
+								"type": "int256"
+							},
+							{
+								"internalType": "int256",
+								"name": "id",
+								"type": "int256"
+							}
+						],
+						"internalType": "struct Question.Answer[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getAnswerRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_index",
+						"type": "uint256"
+					}
+				],
+				"name": "getAnswererP",
+				"outputs": [
+					{
+						"internalType": "contract Profile",
+						"name": "",
 						"type": "address"
 					}
 				],
-				"name": "userIsOwner",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCategory",
 				"outputs": [
 					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCheckReturnDeposit",
+				"outputs": [
+					{
+						"internalType": "bool",
 						"name": "",
 						"type": "bool"
 					}
 				],
-				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"constant": true,
 				"inputs": [],
-				"name": "initialDeposit",
+				"name": "getCheckShareToken",
 				"outputs": [
 					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getContractBInstance",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getDeposit",
+				"outputs": [
+					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
 				],
-				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getNumAnswer4",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": true,
+				"inputs": [],
+				"name": "getOwnerP",
+				"outputs": [
+					{
+						"internalType": "contract Profile",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
+						"internalType": "address",
 						"name": "_question",
 						"type": "address"
 					}
@@ -837,118 +505,417 @@
 				"name": "getQuestionDepositers",
 				"outputs": [
 					{
+						"internalType": "address[]",
 						"name": "",
 						"type": "address[]"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": true,
 				"inputs": [],
-				"name": "numAnswer4Bool",
+				"name": "getRatingQuestion",
 				"outputs": [
 					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSummary",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "string[]",
+						"name": "",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "",
+						"type": "string[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "initialDeposit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isOverdue",
+				"outputs": [
+					{
+						"internalType": "bool",
 						"name": "",
 						"type": "bool"
 					}
 				],
-				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "maxDuration",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": true,
 				"inputs": [],
-				"name": "category",
+				"name": "numAnswer4Bool",
 				"outputs": [
 					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numPeople",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ownerP",
+				"outputs": [
+					{
+						"internalType": "contract Profile",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "postQuestion",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "proportion",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "questionContractB",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "questionDepositers",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "questionRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "questionTitle",
+				"outputs": [
+					{
+						"internalType": "string",
 						"name": "",
 						"type": "string"
 					}
 				],
-				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": false,
 				"inputs": [
 					{
+						"internalType": "uint256",
 						"name": "_ratingQuestion",
 						"type": "uint256"
 					}
 				],
 				"name": "ratingQuestion",
 				"outputs": [],
-				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "returnDeposit",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"name": "_category",
-						"type": "string"
-					},
-					{
-						"name": "_questionTitle",
-						"type": "string"
-					},
-					{
-						"name": "_description",
-						"type": "string"
-					},
-					{
-						"name": "_deposit",
-						"type": "uint256"
-					},
-					{
-						"name": "_maxDuration",
-						"type": "uint256"
-					},
-					{
-						"name": "_fileHashesQuestion",
-						"type": "string[]"
-					},
-					{
-						"name": "_fileNamesQuestion",
-						"type": "string[]"
-					},
-					{
-						"name": "_owner",
-						"type": "address"
-					},
-					{
-						"name": "_ownerP",
+						"internalType": "address",
+						"name": "_questionDepositer",
 						"type": "address"
 					}
 				],
-				"payable": false,
+				"name": "setQuestionDepositers",
+				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "constructor"
+				"type": "function"
 			},
 			{
-				"payable": true,
-				"stateMutability": "payable",
-				"type": "fallback"
+				"inputs": [],
+				"name": "shareToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "start",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sumRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenSum",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "updateAnswerRate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "updateDeposite",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
-			"methods": {}
+			"kind": "dev",
+			"methods": {},
+			"version": 1
 		},
 		"userdoc": {
-			"methods": {}
+			"kind": "user",
+			"methods": {},
+			"version": 1
 		}
 	},
 	"settings": {
 		"compilationTarget": {
 			"contracts/Question.sol": "Question"
 		},
-		"evmVersion": "byzantium",
+		"evmVersion": "istanbul",
 		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
 		"optimizer": {
 			"enabled": false,
 			"runs": 200
@@ -957,15 +924,17 @@
 	},
 	"sources": {
 		"contracts/ETLToken.sol": {
-			"keccak256": "0x1dfd0a08d98cb876519fbf7fcd9cb83733db9946e38465f4bc12333d2e58899e",
+			"keccak256": "0x2b638f165709db12a86f0bf64b4f91879b0b5c436b83edbff1ef7f9e0f63d576",
 			"urls": [
-				"bzzr://ec133a2d57134bfea3656a4ac00cd7689e7e0f85944ba3803021d8d4caefcc27"
+				"bzz-raw://57d42082e2b821b3f40d04ba890480506afcbaea630619b12a4b824d4cf3eb03",
+				"dweb:/ipfs/QmZvVMB3yEnJQDxHcDjUAAf74kAPAHkuKfNj6jqd6As8Qh"
 			]
 		},
 		"contracts/Question.sol": {
-			"keccak256": "0x2fd1d32894dbd87f29f1e5cfa4faf2f99eb72a2b6b6d75acfad174454948bf83",
+			"keccak256": "0x878cac3931b1d5fba8bed8d75ab859dc08b595998a66d93b5ecfbc348f83222c",
 			"urls": [
-				"bzzr://5cb44e713da674a17e20817d5c8e571510c35b62657e95fc0bc55a24ea21b6c5"
+				"bzz-raw://1330bd13ee58fc9ffa41e5fdc8a591f68870bbbb3ee045b3400e224f41e4fa7e",
+				"dweb:/ipfs/QmVUMTtGfhJDKcekEzp7dCtrjKhcUtt2LSrKDxpVFq8xX1"
 			]
 		}
 	},

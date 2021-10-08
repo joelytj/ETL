@@ -10,6 +10,7 @@ import Layout from '../components/Layout';
 import { Router } from '../routes';
 import moment from 'moment';
 import web3 from '../ethereum/web3';
+import ETLNFT from '../ethereum/ETLNFT'
 import { search } from '../utils/search';
 import * as data from '../config.json'
 
@@ -20,11 +21,14 @@ class QuestionIndex extends Component {
     state = {
         loadingShareToken: false,
         loadingReturnDeposit: false,
+        loadingClaimNFT: false,
         disabledShareToken: false,
         disabledReturnDeposit: false,
+        disabledClaimNFT: false,
         didShareToken: false,
         currentIndex: 0,
         currentIndexDep: 0,
+        currentIndexNFT: 0,
         activeCategory: categories[0],
         availableQuestions: [],
         titles: [],
@@ -94,7 +98,7 @@ class QuestionIndex extends Component {
                 console.log("deployedCat2: ", deployedCat2);
                 console.log("deployedCat3: ", deployedCat3);
                 console.log("deployedCat4: ", deployedCat4);
-                console.log("deployedCat5: ", deployedCat5);
+                console.log("deployedCat5: ", deployedCat5);   
             }))
         return { deployedCat1, deployedCat2, deployedCat3, deployedCat4, deployedCat5, searchItem };
     }
@@ -238,7 +242,6 @@ class QuestionIndex extends Component {
             })
         )
 
-
         const numAnswer4 = await Promise.all(
             availableQuestions.map((address) => {
                 return Question(address).methods.getNumAnswer4().call();
@@ -300,6 +303,26 @@ class QuestionIndex extends Component {
         console.log("Share!!!");
     }
 
+    claimNFT = async (event, address, index) => {
+        event.preventDefault();
+
+        this.setState({ loadingClaimNFT: true, currentIndexNFT: index });
+        const accounts = await web3.eth.getAccounts();
+        var etlnft = ETLNFT("0xa34c1C99024328326AB3bE3a21F56A7E95624a55");
+        //mint 1 NFT token each click
+        await etlnft.methods.mint(accounts[0], 1).send({
+            from: accounts[0],
+            value: web3.utils.toWei((0.02 * 1).toString(), "ether"), 
+        });
+
+        this.setState({
+            loadingClaimNFT: false,
+            disabledClaimNFT: true
+        });
+
+        console.log("Claimed NFT!!!");
+    }
+
     handleCategoryClick = async (e, { name }) => {
         await this.setState({
             activeCategory: name
@@ -357,6 +380,9 @@ class QuestionIndex extends Component {
                             <Grid.Row textAlign='right'>
                                 <Button positive onClick={(e) => this.shareToken(e, address, i)} loading={this.state.loadingShareToken && (this.state.currentIndex == i)} disabled={this.state.disabledShareToken}>
                                     Share Tokens!
+                                </Button>
+                                <Button positive onClick={(e) => this.claimNFT(e, address, i)} loading={this.state.loadingClaimNFT && (this.state.currentIndexNFT == i)} disabled={this.state.disabledClaimNFT}>
+                                    Claim NFT!
                                 </Button>
                                 <Message color='red' compact size='mini'
                                     header={'End time: ' + timeEnd}
