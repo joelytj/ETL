@@ -6,7 +6,7 @@ import factory from '../ethereum/factory';
 import Profile from '../ethereum/profile';
 import Token from '../ethereum/ETLToken' 
 import Question from '../ethereum/question';
-import ETLNFT from '../ethereum/ETLNFT'
+// import ETLNFT from '../ethereum/ETLNFT'
 import ReactToPrint from 'react-to-print';
 // import Rental from '../ethereum/rental';
 import { Link, Router } from '../routes';
@@ -21,9 +21,9 @@ class ProfileShow extends Component {
         numOfQues: 0,
         rateOfQues: 0,
         numOfAns: 0,
-        rateOfAns: 0,
-        nftTokenIds: null,
-        text: null
+        rateOfAns: 0
+        // nftTokenIds: null,
+        // text: null
     };
 
     async componentDidMount() {
@@ -37,13 +37,13 @@ class ProfileShow extends Component {
                 const profileAddress = await factory.methods.getProfile(accounts[0]).call();
                 var profile = Profile(profileAddress);
                 var ETLToken = Token("0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0");  
-                var etlnft = ETLNFT("0xa34c1C99024328326AB3bE3a21F56A7E95624a55");
-                var nftTokenIds = await etlnft.methods.walletOfOwner(accounts[0]).call();
-                var text = ""
-                for (var i = 0; i < nftTokenIds.length; i++) {
-                    text += String(nftTokenIds[i]) + ","
-                }
-                text = text.slice(0,-1)
+                // var etlnft = ETLNFT("0xa34c1C99024328326AB3bE3a21F56A7E95624a55");
+                // var nftTokenIds = await etlnft.methods.walletOfOwner(accounts[0]).call();
+                // var text = ""
+                // for (var i = 0; i < nftTokenIds.length; i++) {
+                //     text += String(nftTokenIds[i]) + ","
+                // }
+                // text = text.slice(0,-1)
                 var token = await profile.methods.getToken(accounts[0]).call() / 10**2; 
                 var numOfQues = await profile.methods.getNumOfQues().call();
                 var rateOfQues = await profile.methods.getavgQuesRate().call();
@@ -52,7 +52,7 @@ class ProfileShow extends Component {
                 var loader = false;
                 var isUser = true;
 
-                this.setState({ address: accounts[0], loader , isUser, token, numOfQues, numOfAns, rateOfQues, rateOfAns, nftTokenIds, text });
+                this.setState({ address: accounts[0], loader , isUser, token, numOfQues, numOfAns, rateOfQues, rateOfAns}); //nftTokenIds, text
             }
         }
     }
@@ -102,7 +102,7 @@ class ProfileShow extends Component {
                     <Divider vertical></Divider>
                 </Segment>
 
-                <Segment size='big'>
+                {/* <Segment size='big'>
                     <Grid columns={1} relaxed='very' textAlign='center'>
                         
                         <Header as='h2' icon textAlign='center' style={{marginTop: 10}}>
@@ -114,7 +114,7 @@ class ProfileShow extends Component {
                         </Header>
                     </Grid>
                     
-                </Segment>
+                </Segment> */}
 
             </React.Fragment>
         );

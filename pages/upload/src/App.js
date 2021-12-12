@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 
-import './App.css'
+// import './App.css'
 
 async function postImage({image, address}) {
   const formData = new FormData();

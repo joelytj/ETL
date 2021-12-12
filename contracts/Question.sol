@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.5.0;
 pragma experimental ABIEncoderV2;
 import "./ETLToken.sol";
 
@@ -30,6 +30,7 @@ contract QuestionFactory {
     address[] private deployedQuestions;
     mapping(address => address) public users;
     mapping(address => address) public owner;
+    mapping(address => string) public nftClaim;
     address public contractbinstance;
 
     ETLToken tokenContract = ETLToken(0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0);
@@ -106,6 +107,15 @@ contract QuestionFactory {
         Profile(question.getAnswererP(_index)).increaseSumOfAnsRate(_ratingAnswer);
     }
 
+    function claimNFTAt(address _question) public payable {
+        if (users[msg.sender] == address(0x0)) {
+            Profile profile = new Profile(msg.sender);
+            users[msg.sender] = address(profile);
+        }
+
+        Question question = Question(_question);
+        question.claimNFT();
+    }
 
     function shareTokenAt(address _question) public payable {
         if (users[msg.sender] == address(0x0)) {
@@ -143,7 +153,10 @@ contract QuestionFactory {
     function getDeployedQuestions() public view returns(address[] memory) {
         return deployedQuestions;
     }
-
+    
+    function setNftClaim(address _address, string memory dataUri) public {
+        nftClaim[_address] = dataUri;
+    }
 }    
 
 
@@ -178,6 +191,7 @@ contract Question {
     uint public sumRate;
     bool public alreadyShareToken = false;
     bool public alreadyReturnDeposit =  false;
+    bool public alreadyClaimNFT = false;
     bool public numAnswer4Bool;
     uint public tokenSum;
     uint public proportion;
@@ -287,6 +301,10 @@ contract Question {
 
     }
 
+    function getCheckClaimNFT() public returns (bool) {
+        return (!alreadyClaimNFT);
+    }
+
     function getCheckShareToken() public returns(bool){
         return (!alreadyShareToken);
     }
@@ -327,6 +345,10 @@ contract Question {
         }
 
         alreadyReturnDeposit = true;
+    }
+
+    function claimNFT() public {
+        alreadyClaimNFT = true;
     }
 
     function shareToken() public {
@@ -466,7 +488,7 @@ contract Profile {
     }
 
     function getToken(address _user) public returns(uint){
-        token = tokenContract.balanceOf(_user); //removed /10**2 => => 5 token == 500
+        token = tokenContract.balanceOf(_user); 
         
         return token;
 

@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import {
     Statistic, Divider, Grid, Table, Message, Rating, Icon, Button,
-    Menu, Container, Segment
+    Menu, Container, Segment, Modal
 } from 'semantic-ui-react';
-import { ethers } from 'ethers';
+
 import factory from '../ethereum/factory';
 import Question from '../ethereum/question';
 import Layout from '../components/Layout';
-import { Router } from '../routes';
 import moment from 'moment';
 import web3 from '../ethereum/web3';
-import ETLNFT from '../ethereum/ETLNFT'
+// import ETLNFT from '../ethereum/ETLNFT'
+import EtherlearnNFT from '../ethereum/EtherlearnNFT';
 import { search } from '../utils/search';
 import * as data from '../config.json'
+import { Link, Router } from '../routes';
 
 const { categories } = data;
-
+const textToImage = require('text-to-image');
 
 class QuestionIndex extends Component {
     state = {
@@ -26,6 +27,7 @@ class QuestionIndex extends Component {
         disabledReturnDeposit: false,
         disabledClaimNFT: false,
         didShareToken: false,
+        nftInfo: false,
         currentIndex: 0,
         currentIndexDep: 0,
         currentIndexNFT: 0,
@@ -33,6 +35,8 @@ class QuestionIndex extends Component {
         availableQuestions: [],
         titles: [],
         deposit: [],
+        files: [],
+        nft: {},
         timeEnd: [],
         answererList: [],
         questionRating: [],
@@ -59,16 +63,24 @@ class QuestionIndex extends Component {
         let deployed = [];
         let searchOrNot = false;
         let searchItem;
+        let dataUriDict = {};
         //filter the questions based on search value
         if (query.value != undefined && query.value != 'favicon.ico') {
             searchItem = decodeURIComponent(query.value.substring(7));
             deployedQuestions = await search(searchItem, deployedQuestions);
         }
 
+        
+
         await Promise.all(
             deployedQuestions.map(async (item) => {
                 const itemCat = await Question(item).methods.getCategory().call();
-                console.log(itemCat);
+                const summary = await Question(item).methods.getSummary().call();
+                console.log(itemCat);                
+                textToImage.generate(summary[1]).then(function(dataUri) {
+                    dataUriDict[item] = dataUri;
+                })
+                
                 switch (itemCat) {
                     case categories[0]: {
                         deployedCat1.push(item);
@@ -100,7 +112,7 @@ class QuestionIndex extends Component {
                 console.log("deployedCat4: ", deployedCat4);
                 console.log("deployedCat5: ", deployedCat5);   
             }))
-        return { deployedCat1, deployedCat2, deployedCat3, deployedCat4, deployedCat5, searchItem };
+        return { deployedCat1, deployedCat2, deployedCat3, deployedCat4, deployedCat5, searchItem, dataUriDict };
     }
 
     componentDidMount = async () => {
@@ -152,11 +164,91 @@ class QuestionIndex extends Component {
         }
     }
 
+    dataURItoBlob(dataURI) {
+        // convert base64 to raw binary data held in a string
+        // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+        var byteString = atob(dataURI.split(',')[1]);
+    
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    
+        // write the bytes of the string to an ArrayBuffer
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+    
+        //Old Code
+        //write the ArrayBuffer to a blob, and you're done
+        //var bb = new BlobBuilder();
+        //bb.append(ab);
+        //return bb.getBlob(mimeString);
+    
+        //New Code
+        return new Blob([ab], {type: mimeString});
+    
+    }
+
+    upload = async (blob, userAddress) => {
+        try {
+            // pinningMetadata = true;
+            const serverUrl = "http://localhost:8080";
+
+            const data = new FormData();
+            data.append("image", blob)
+            data.append("creator", userAddress);
+
+            const response = await fetch(`${serverUrl}/mint`, {
+                method: "POST",
+                headers: {
+                    "Access-Control-Allow-Origin": "*"
+                },
+                body: data
+            });
+            if (response) {
+                const data = await response.json();
+                if (data.status === true &&
+                    data.msg.metadataHash && 
+                    data.msg.imageHash) {
+                        // pinningMetadata = false;
+                        // mintingToken = true;
+
+                        var etlnft = EtherlearnNFT("0xBc6e06B22A7d1ce4bED705eeaCEe8B356944997E"); // "0x122F846Ee5611120e3F71E54Ed159c894C89e4a8"
+                        
+                        try {
+                            await etlnft.methods.claimItem(`https://ipfs.io/ipfs/${data.msg.metadataHash}`).send({from: userAddress});
+                        } catch (e) {
+                            console.log(e);
+                        }                                                
+                        console.log('passed')
+                    
+            }   else {
+                throw data.msg;
+                }
+            }   else {
+                throw "No response";
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            // pinningMetadata = false;
+            // mintingToken = false;
+            console.log("yay")
+        }
+    }
+    
+
+
     renderData = async (category) => {
         const accounts = await web3.eth.getAccounts();
 
-        const { deployedCat1, deployedCat2, deployedCat3, deployedCat4, deployedCat5 } = this.props;
-
+        const { deployedCat1, deployedCat2, deployedCat3, deployedCat4, deployedCat5, dataUriDict} = this.props;
+        // for (var key in dataUriDict) {
+        //     console.log(dataUriDict[key]);
+        // }
+        // console.log("dataUriDict", dataUriDict)
+        console.log("dataUriDict len", Object.keys(dataUriDict).length)
         console.log("deployedCat1: ", deployedCat1);
         console.log("deployedCat2: ", deployedCat2);
         console.log("deployedCat3: ", deployedCat3);
@@ -194,6 +286,7 @@ class QuestionIndex extends Component {
         let titles = [];
         let deposit = [];
         let owners = [];
+        let files = [];
         let address = null;
 
         const summary = await Promise.all(
@@ -207,6 +300,7 @@ class QuestionIndex extends Component {
             titles.push(item[0]);
             deposit.push(item[2] / 10**2);
             owners.push(item[4]);
+            files.push([item[5],item[6],item[1]])
         });
 
 
@@ -229,6 +323,12 @@ class QuestionIndex extends Component {
                 return Question(address).methods.getAnswerList().call();
             })
         );
+
+        const claimNFT = await Promise.all(
+            availableQuestions.map((address) => {
+                return Question(address).methods.getCheckClaimNFT().call();
+            })
+        )
 
         const shareToken = await Promise.all(
             availableQuestions.map((address) => {
@@ -259,10 +359,12 @@ class QuestionIndex extends Component {
             titles: titles,
             deposit: deposit,
             owners: owners,
+            files: files,
             timeEnd: timeEnd,
             answererList: answererList,
             questionRating: questionRating,
             isOverDue: isOverDue,
+            claimNFT: claimNFT,
             shareToken: shareToken,
             returnDeposit: returnDeposit,
             numAnswer4: numAnswer4,
@@ -308,12 +410,18 @@ class QuestionIndex extends Component {
 
         this.setState({ loadingClaimNFT: true, currentIndexNFT: index });
         const accounts = await web3.eth.getAccounts();
-        var etlnft = ETLNFT("0xa34c1C99024328326AB3bE3a21F56A7E95624a55");
-        //mint 1 NFT token each click
-        await etlnft.methods.mint(accounts[0], 1).send({
+        await factory.methods.claimNFTAt(address).send({
             from: accounts[0],
-            value: web3.utils.toWei((0.02 * 1).toString(), "ether"), 
         });
+        const { deployedCat1, deployedCat2, deployedCat3, deployedCat4, deployedCat5, dataUriDict } = this.props;
+
+        let nft = {};
+        nft[accounts[0]] = dataUriDict[address];
+
+        let blob = this.dataURItoBlob(dataUriDict[address]);
+        this.upload(blob, accounts[0]);
+
+        this.setState({nft: nft, nftInfo: true});
 
         this.setState({
             loadingClaimNFT: false,
@@ -332,15 +440,33 @@ class QuestionIndex extends Component {
         console.log("End handleCategoryClick");
     }
 
+    nftInfo() {
+        return(
+        <Modal
+        size="tiny"
+        open={this.state.nftInfo}
+        onClose={() => this.setState({ nftInfo: false })}
+        style={{textAlign: 'center'}}
+    >
+        <Modal.Header>Claimed! Your NFT token is being minted. Connect your Metamask wallet to https://testnets.opensea.io/ and check OpenSea some time later.</Modal.Header>
+            </Modal>
+        )
+    }
+
     renderQuestionsDesktop() {
         const { activeCategory } = this.state;
         const items = this.state.availableQuestions.map((address, i) => {
             const owner = this.state.owners[i];
             const isOwner = (owner == this.state.address);
             const deposit = this.state.deposit[i]; //ethers.utils.formatUnits(this.state.deposit[i], "ether")*1000000000000000000;
+            // const dataUriDict = this.state.dataUriDict;
+            // console.log(dataUriDict)
+            const nft = this.state.nft;
+            console.log(nft)
             const rating = this.state.questionRating[i];
             const answers = this.state.answererList[i];
             const isOverDue = this.state.isOverDue[i];
+            const canClaimNFT = this.state.claimNFT[i];
             const canShareToken = this.state.shareToken[i];
             const canReturnDeposit = this.state.returnDeposit[i];
             const timeEnd = this.state.timeEnd[i];
@@ -376,24 +502,31 @@ class QuestionIndex extends Component {
                         
                     </Grid.Row>
                     {isOverDue ? 
-                        ((canShareToken) ? ((numAnswer4) ? isOwner ?
+                        ((canShareToken) ? ((numAnswer4) ? isOwner ? canClaimNFT ?
                             <Grid.Row textAlign='right'>
                                 <Button positive onClick={(e) => this.shareToken(e, address, i)} loading={this.state.loadingShareToken && (this.state.currentIndex == i)} disabled={this.state.disabledShareToken}>
                                     Share Tokens!
                                 </Button>
                                 <Button positive onClick={(e) => this.claimNFT(e, address, i)} loading={this.state.loadingClaimNFT && (this.state.currentIndexNFT == i)} disabled={this.state.disabledClaimNFT}>
                                     Claim NFT!
+                                </Button> 
+                                <Message color='red' compact size='mini'
+                                    header={'End time: ' + timeEnd}
+                                />
+                            </Grid.Row>: <Grid.Row textAlign='right'>
+                                <Button positive onClick={(e) => this.shareToken(e, address, i)} loading={this.state.loadingShareToken && (this.state.currentIndex == i)} disabled={this.state.disabledShareToken}>
+                                    Share Tokens!
                                 </Button>
                                 <Message color='red' compact size='mini'
                                     header={'End time: ' + timeEnd}
                                 />
-                            </Grid.Row>:<Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row> : ((canReturnDeposit) ? isOwner ?<Grid.Row textAlign='right'><Button positive onClick={(e) => this.returnDeposit(e, address, i)} loading={this.state.loadingReturnDeposit && (this.state.currentIndexDep == i)} disabled={this.state.disabledReturnDeposit}>
+                            </Grid.Row> : <Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row> : ((canReturnDeposit) ? isOwner ?<Grid.Row textAlign='right'><Button positive onClick={(e) => this.returnDeposit(e, address, i)} loading={this.state.loadingReturnDeposit && (this.state.currentIndexDep == i)} disabled={this.state.disabledReturnDeposit}>
                                     Return Deposit!
                                 </Button> 
                                 <Message color='red' compact size='mini'
                                     header={'End time: '+timeEnd}
                                 />
-                        </Grid.Row>: <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row> : <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row>)) : <Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row>) :
+                        </Grid.Row>: <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row> : <Grid.Row textAlign='right'><span> Question expired. Deposit Returned!<Icon name='check' color='green' /></span></Grid.Row>)) :  <Grid.Row textAlign='right'><span> Question expired. Tokens Shared!<Icon name='check' color='green' /></span></Grid.Row>) : 
                         <Grid.Row textAlign='right'>
                             <Message color='yellow' compact size='mini'
                                 header={'End time: ' + timeEnd}
@@ -446,6 +579,8 @@ class QuestionIndex extends Component {
                 <Divider hidden />
                 <div style={{ marginTop: 20 }}>Found {itemsLength} Item(s).</div>
                 <Divider hidden />
+
+                {this.nftInfo()}
             </Layout>
         );
     }

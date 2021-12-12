@@ -56,6 +56,7 @@ class HeaderDesktop extends Component {
                                                 Profile
                                             </a>
                                         </Link>
+
                                     </Menu.Menu>
                                 </Container>
                             </Menu>
