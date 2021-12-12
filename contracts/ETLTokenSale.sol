@@ -1,5 +1,4 @@
-pragma solidity ^0.4.25;
-
+pragma solidity ^0.5.0;
 import "./ETLToken.sol";
 
 contract ETLTokenSale {
@@ -23,7 +22,7 @@ contract ETLTokenSale {
     function buyTokens(uint256 _numberOfTokens) public payable {
         require(msg.value == multiply(_numberOfTokens, tokenPrice));
 
-        require(tokenContract.balanceOf(this) >= _numberOfTokens);
+        require(tokenContract.balanceOf(address(this)) >= _numberOfTokens);
         require(tokenContract.transfer(msg.sender, _numberOfTokens));
 
         tokensSold += _numberOfTokens;
@@ -31,11 +30,11 @@ contract ETLTokenSale {
         emit Sell(msg.sender, _numberOfTokens);
     }
 
-    function endSale() public {
+    function endSale() public payable {
         require(msg.sender == admin);
-        require(tokenContract.transfer(admin, tokenContract.balanceOf(this)));
+        require(tokenContract.transfer(admin, tokenContract.balanceOf(address(this))));
 
         // Just transfer the balance to the admin
-        admin.transfer(address(this).balance);
+        // admin.transfer(address(this).balance);
     }
 }

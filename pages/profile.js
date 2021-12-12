@@ -6,6 +6,7 @@ import factory from '../ethereum/factory';
 import Profile from '../ethereum/profile';
 import Token from '../ethereum/ETLToken' 
 import Question from '../ethereum/question';
+// import ETLNFT from '../ethereum/ETLNFT'
 import ReactToPrint from 'react-to-print';
 // import Rental from '../ethereum/rental';
 import { Link, Router } from '../routes';
@@ -21,6 +22,8 @@ class ProfileShow extends Component {
         rateOfQues: 0,
         numOfAns: 0,
         rateOfAns: 0
+        // nftTokenIds: null,
+        // text: null
     };
 
     async componentDidMount() {
@@ -34,6 +37,13 @@ class ProfileShow extends Component {
                 const profileAddress = await factory.methods.getProfile(accounts[0]).call();
                 var profile = Profile(profileAddress);
                 var ETLToken = Token("0x06c3caFae04F15851be7E3B72deA2dA3E0f696E0");  
+                // var etlnft = ETLNFT("0xa34c1C99024328326AB3bE3a21F56A7E95624a55");
+                // var nftTokenIds = await etlnft.methods.walletOfOwner(accounts[0]).call();
+                // var text = ""
+                // for (var i = 0; i < nftTokenIds.length; i++) {
+                //     text += String(nftTokenIds[i]) + ","
+                // }
+                // text = text.slice(0,-1)
                 var token = await profile.methods.getToken(accounts[0]).call() / 10**2; 
                 var numOfQues = await profile.methods.getNumOfQues().call();
                 var rateOfQues = await profile.methods.getavgQuesRate().call();
@@ -42,7 +52,7 @@ class ProfileShow extends Component {
                 var loader = false;
                 var isUser = true;
 
-                this.setState({ address: accounts[0], loader , isUser, token, numOfQues, numOfAns, rateOfQues, rateOfAns });
+                this.setState({ address: accounts[0], loader , isUser, token, numOfQues, numOfAns, rateOfQues, rateOfAns}); //nftTokenIds, text
             }
         }
     }
@@ -69,7 +79,7 @@ class ProfileShow extends Component {
                     <Header.Subheader>
                         <div style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>{this.state.address}</div>
                     </Header.Subheader>
-                    <p>Number of Tokens: {this.state.token/1}</p>
+                    <p>Number of ETLTokens: {this.state.token/1}</p>
                 </Header>
                 <Segment size='big'>
                     <Grid columns={2} relaxed='very'>
@@ -91,6 +101,20 @@ class ProfileShow extends Component {
                     </Grid>
                     <Divider vertical></Divider>
                 </Segment>
+
+                {/* <Segment size='big'>
+                    <Grid columns={1} relaxed='very' textAlign='center'>
+                        
+                        <Header as='h2' icon textAlign='center' style={{marginTop: 10}}>
+                            <Header.Content>View your NFT tokens <a href={"https://testnets.opensea.io/assets/0xa34c1c99024328326ab3be3a21f56a7e95624a55/" + this.state.nftTokenIds[0]} target="_blank">here</a> !</Header.Content>
+                            <Header.Subheader>
+                                <div style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>Your ETLNFT Token IDs: {this.state.text} </div>
+                                <div style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>https://testnets.opensea.io/assets/0xa34c1c99024328326ab3be3a21f56a7e95624a55/TO_BE_REPLACED_WITH_TOKEN_ID</div>
+                            </Header.Subheader>
+                        </Header>
+                    </Grid>
+                    
+                </Segment> */}
 
             </React.Fragment>
         );

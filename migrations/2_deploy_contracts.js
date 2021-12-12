@@ -2,11 +2,12 @@ const QuestionFactory = artifacts.require("QuestionFactory");
 const contractB = artifacts.require("contractB");
 const ETLToken = artifacts.require("./ETLToken.sol");
 const ETLTokenSale = artifacts.require("./ETLTokenSale.sol");
-
+const EtherlearnNFT = artifacts.require("./EtherlearnNFT.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(QuestionFactory);
-  deployer.deploy(contractB); 
+  deployer.deploy(QuestionFactory); //{overwrite: false}
+  deployer.deploy(contractB, {overwrite: false}); 
+  deployer.deploy(EtherlearnNFT, "Etherlearn NFT", "ETLNFT");
   
   deployer.deploy(ETLToken, 1000000000, {overwrite: false}).then(function() { 
       // Token price is 0.0001 Ether
@@ -18,5 +19,6 @@ module.exports = function(deployer) {
     }).then(function(){
       ETLToken.deployed().then(function(instance) { instance.transfer(ETLToken.address, 999250000, { from: "0xd2BF5D1B3ceCE53eE825760E6644c1d4E1028C04" }); })
     })
-};
 
+  
+};

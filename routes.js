@@ -7,5 +7,6 @@ routes
      .add('/questions/post', '/questions/postQuestion')
      .add('/questions/:address', '/questions/show')
      .add('/:value','/index')
+     .add('/upload/index', '/upload/upload')
 
 module.exports = routes;
