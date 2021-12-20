@@ -193,7 +193,7 @@ class QuestionIndex extends Component {
     upload = async (blob, userAddress) => {
         try {
             // pinningMetadata = true;
-            const serverUrl = "http://localhost:8080";
+            const serverUrl = "http://34.200.118.178:8080";
 
             const data = new FormData();
             data.append("image", blob)
