@@ -3,8 +3,8 @@ import pinataSDK from "@pinata/sdk";
 import fs from "fs";
 import cors from "cors";
 import multer from "multer";
-// import { createRequire } from 'module';
-// const require = createRequire(import.meta.url);
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 const { portX, pinataApiKey, pinataSecretKey } = require('../config.cjs');
 
@@ -94,6 +94,7 @@ app.post("/mint", upload.single("image"), async (req, res) => {
 // starts the Express server
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
+  console.log(pinataApiKey);
 });
 
 app.listen.keepAliveTimeout = 65000;

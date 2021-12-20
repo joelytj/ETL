@@ -254,6 +254,7 @@ class QuestionIndex extends Component {
         console.log("deployedCat3: ", deployedCat3);
         console.log("deployedCat4: ", deployedCat4);
         console.log("deployedCat5: ", deployedCat5);
+        console.log("have deployed cat")
 
         let availableQuestions = [];
 
