@@ -3,8 +3,8 @@ import pinataSDK from "@pinata/sdk";
 import fs from "fs";
 import cors from "cors";
 import multer from "multer";
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+// import { createRequire } from 'module';
+// const require = createRequire(import.meta.url);
 
 const { portX, pinataApiKey, pinataSecretKey } = require('../config.cjs');
 
@@ -14,7 +14,7 @@ const port = process.env.NODE_ENV === "production" ? portX : 8080; // default po
 let pinata = pinataSDK(pinataApiKey, pinataSecretKey );
 
 const corsOptions = {
-  origin: ["http://localhost:3030", "https://www.ether-learn.com"],
+  origin: ["http://localhost:3030", "http://34.200.118.178:3030", "https://www.ether-learn.com"],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
@@ -95,3 +95,5 @@ app.post("/mint", upload.single("image"), async (req, res) => {
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
 });
+
+app.listen.keepAliveTimeout = 65000;
