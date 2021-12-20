@@ -4,8 +4,8 @@
   "description": "A tutorial about using Taquito and Pinata to mint NFTs on Tezos",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production nodemon -r dotenv/config ./src/index.js",
-    "dev": "nodemon ./src/index.js localhost 8080",
+    "start": "NODE_ENV=production PORT=8080 nodemon -r esm dotenv/config ./src/index.js",
+    "dev": "node -r esm ./src/index.js 8080",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "git add . && git commit -m Heroku && git push heroku main"
   },
