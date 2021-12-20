@@ -208,28 +208,33 @@ class QuestionIndex extends Component {
             });
             if (response) {
                 const data = await response.json();
+                console.log("have response")
                 if (data.status === true &&
                     data.msg.metadataHash && 
                     data.msg.imageHash) {
                         // pinningMetadata = false;
                         // mintingToken = true;
-
+                        console.log("data attr ok")
                         var etlnft = EtherlearnNFT("0xBc6e06B22A7d1ce4bED705eeaCEe8B356944997E"); // "0x122F846Ee5611120e3F71E54Ed159c894C89e4a8"
                         
                         try {
                             await etlnft.methods.claimItem(`https://ipfs.io/ipfs/${data.msg.metadataHash}`).send({from: userAddress});
                         } catch (e) {
+                            console.log("error in claiming item")
                             console.log(e);
                         }                                                
                         console.log('passed')
                     
             }   else {
+                console.log("data attr not ok")
                 throw data.msg;
                 }
             }   else {
+                console.log("no response")
                 throw "No response";
             }
         } catch (error) {
+            console.log("error in upload")
             console.log(error);
         } finally {
             // pinningMetadata = false;

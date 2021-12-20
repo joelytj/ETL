@@ -94,7 +94,7 @@ app.post("/mint", upload.single("image"), async (req, res) => {
 // starts the Express server
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
-  console.log(pinataApiKey);
+  // console.log(pinataApiKey);
 });
 
 app.listen.keepAliveTimeout = 65000;
