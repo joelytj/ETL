@@ -5,7 +5,7 @@ const ETLTokenSale = artifacts.require("./ETLTokenSale.sol");
 const EtherlearnNFT = artifacts.require("./EtherlearnNFT.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(QuestionFactory); //{overwrite: false}
+  deployer.deploy(QuestionFactory); 
   deployer.deploy(contractB, {overwrite: false}); 
   deployer.deploy(EtherlearnNFT, "Etherlearn NFT", "ETLNFT");
   

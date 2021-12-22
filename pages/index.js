@@ -9,7 +9,6 @@ import Question from '../ethereum/question';
 import Layout from '../components/Layout';
 import moment from 'moment';
 import web3 from '../ethereum/web3';
-// import ETLNFT from '../ethereum/ETLNFT'
 import EtherlearnNFT from '../ethereum/EtherlearnNFT';
 import { search } from '../utils/search';
 import * as data from '../config.json'
@@ -53,7 +52,6 @@ class QuestionIndex extends Component {
         deployedQuestions = [...deployedQuestions]
         deployedQuestions = deployedQuestions.reverse();
 
-        //let chosenQuestions;
         console.log(query.value);
         let deployedCat1 = [];
         let deployedCat2 = [];
@@ -116,42 +114,6 @@ class QuestionIndex extends Component {
     }
 
     componentDidMount = async () => {
-        // const deployedQuestions = await factory.methods.getDeployedQuestions().call();
-        // deployedQuestions.reverse();
-
-        // let {deployedAsking, deployedQuery, deployedDiscussion} = this.state;
-
-        // console.log("deployedQuestions: ", deployedQuestions);
-
-        // await Promise.all(
-        //     deployedQuestions.map(async (item) => {
-        //         const itemCat = await Question(item).methods.getCategory().call();
-        //         console.log(itemCat);
-        //         switch (itemCat) {
-        //             case "Asking":   {
-        //                 deployedAsking.push(item);
-        //                 break;
-        //             }   
-        //             case "Query": {
-        //                 deployedQuery.push(item);
-        //                 break;
-        //             }   
-        //             case "Discussion":  {
-        //                 deployedDiscussion.push(item);
-        //                 break;
-        //             }   
-        //         }
-        //         console.log("deployedAsking: ", deployedAsking);
-        //         console.log("deployedQuery: ", deployedQuery);
-        //         console.log("deployedDiscussion: ", deployedDiscussion);
-        //     }));
-
-        // await this.setState({
-        //     deployedAsking: deployedAsking,
-        //     deployedQuery: deployedQuery,
-        //     deployedDiscussion: deployedDiscussion
-        // });
-
         await this.renderData(categories[0]);
 
         console.log("componentDidMount");
@@ -192,7 +154,6 @@ class QuestionIndex extends Component {
 
     upload = async (blob, userAddress) => {
         try {
-            // pinningMetadata = true;
             const serverUrl = "http://34.200.118.178:8080";
 
             const data = new FormData();
@@ -212,8 +173,7 @@ class QuestionIndex extends Component {
                 if (data.status === true &&
                     data.msg.metadataHash && 
                     data.msg.imageHash) {
-                        // pinningMetadata = false;
-                        // mintingToken = true;
+
                         console.log("data attr ok")
                         var etlnft = EtherlearnNFT("0xBc6e06B22A7d1ce4bED705eeaCEe8B356944997E"); // "0x122F846Ee5611120e3F71E54Ed159c894C89e4a8"
                         
@@ -237,8 +197,7 @@ class QuestionIndex extends Component {
             console.log("error in upload")
             console.log(error);
         } finally {
-            // pinningMetadata = false;
-            // mintingToken = false;
+
             console.log("yay")
         }
     }
@@ -249,10 +208,7 @@ class QuestionIndex extends Component {
         const accounts = await web3.eth.getAccounts();
 
         const { deployedCat1, deployedCat2, deployedCat3, deployedCat4, deployedCat5, dataUriDict} = this.props;
-        // for (var key in dataUriDict) {
-        //     console.log(dataUriDict[key]);
-        // }
-        // console.log("dataUriDict", dataUriDict)
+
         console.log("dataUriDict len", Object.keys(dataUriDict).length)
         console.log("deployedCat1: ", deployedCat1);
         console.log("deployedCat2: ", deployedCat2);
